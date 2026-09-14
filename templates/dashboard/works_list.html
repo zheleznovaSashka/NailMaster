@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Управление работами{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Хлебные крошки -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item active">Работы</li>
+        </ol>
+    </nav>
+
+    <!-- Заголовок -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="mb-1">🖼️ Управление работами</h1>
+            <p class="text-muted mb-0">Всего работ: {{ works.count }}</p>
+        </div>
+        <a href="{% url 'dashboard:work_create' %}" class="btn btn-primary btn-lg">
+            ➕ Добавить работу
+        </a>
+    </div>
+
+    <!-- Список работ -->
+    {% if works %}
+        <div class="row g-3">
+            {% for work in works %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm h-100">
+                    <img src="{{ work.image.url }}" class="card-img-top" alt="{{ work.title }}" style="height: 200px; object-fit: cover;">
+
+                    {% if work.is_featured %}
+                        <span class="badge bg-success position-absolute top-0 end-0 m-2">✨ На главной</span>
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title mb-1">{{ work.title }}</h5>
+                        <p class="card-text text-muted small mb-2">{{ work.description|truncatewords:15|default:"Без описания" }}</p>
+                        <small class="text-muted">📅 {{ work.created_at|date:"d.m.Y" }}</small>
+                    </div>
+
+                    <div class="card-footer bg-white border-top">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="{% url 'dashboard:work_edit' work.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                                ✏️ Изменить
+                            </a>
+                            <a href="{% url 'dashboard:work_toggle' work.pk %}" class="btn btn-sm {% if work.is_featured %}btn-warning{% else %}btn-outline-success{% endif %}">
+                                {% if work.is_featured %}⭐{% else %}☆{% endif %}
+                            </a>
+                            <a href="{% url 'dashboard:work_delete' work.pk %}" class="btn btn-sm btn-outline-danger">
+                                🗑️
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div class="display-1 mb-3">🖼️</div>
+            <h3>Пока нет работ</h3>
+            <p class="text-muted">Добавьте первую работу, чтобы она появилась на сайте</p>
+            <a href="{% url 'dashboard:work_create' %}" class="btn btn-primary btn-lg mt-3">
+                ➕ Добавить первую работу
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

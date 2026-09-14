@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+/media/
+/staticfiles/
+
+# СЕКРЕТЫ (ВАЖНО!)
+.env
+*.sqlite3
+
+# Бэкапы
+*_backup_*
+media_backup_*/
+db_backup_*
+
+# JSON-выгрузки (не нужны в репо)
+*.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

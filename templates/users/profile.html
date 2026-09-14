@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Мой профиль{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- ЛЕВАЯ КОЛОНКА: Аватар + статистика -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="Аватар" class="rounded-circle mb-3"
+                         style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #6c5ce7;">
+                    {% else %}
+                    <div class="rounded-circle d-inline-flex align-items-center justify-content-center text-white mb-3"
+                         style="width: 150px; height: 150px; background: var(--gradient); font-size: 60px; font-weight: 700;">
+                        {{ user.username|first|upper }}
+                    </div>
+                    {% endif %}
+
+                    <h4 class="mb-1">{{ user.first_name }} {{ user.last_name }}</h4>
+                    <p class="text-muted mb-2">{{ user.email }}</p>
+                    {% if user.phone %}
+                    <p class="text-muted mb-3">📞 {{ user.phone }}</p>
+                    {% endif %}
+
+                    <small class="text-muted d-block mb-3">
+                        📅 С нами с {{ user.date_joined|date:"d.m.Y" }}
+                    </small>
+                </div>
+            </div>
+
+            <!-- Статистика -->
+            <div class="card shadow mt-4">
+                <div class="card-body">
+                    <h5 class="mb-3">📊 Статистика</h5>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>📦 Заказов:</span>
+                        <strong class="text-primary">{{ orders_count }}</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>⭐ Отзывов:</span>
+                        <strong class="text-primary">{{ reviews_count }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА: Вкладки -->
+        <div class="col-lg-8">
+            <!-- Навигация по вкладкам -->
+            <ul class="nav nav-pills mb-4" id="profileTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-profile" type="button">
+                        👤 Профиль
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-password" type="button">
+                        🔒 Пароль
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-orders" type="button">
+                        📦 Заказы
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Вкладка "Профиль" -->
+                <div class="tab-pane fade show active" id="tab-profile">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h5 class="mb-0">✏️ Редактировать профиль</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="update_profile" value="1">
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">👤 Имя пользователя</label>
+                                    {{ profile_form.username }}
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">📛 Имя</label>
+                                        {{ profile_form.first_name }}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">📛 Фамилия</label>
+                                        {{ profile_form.last_name }}
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">📧 Email</label>
+                                    {{ profile_form.email }}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">📞 Телефон</label>
+                                    {{ profile_form.phone }}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">🖼️ Аватар</label>
+                                    {{ profile_form.avatar }}
+                                    {% if user.avatar %}
+                                    <small class="text-muted d-block mt-1">Текущий аватар: <a
+                                            href="{{ user.avatar.url }}" target="_blank">посмотреть</a></small>
+                                    {% endif %}
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    💾 Сохранить изменения
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Вкладка "Пароль" -->
+                <div class="tab-pane fade" id="tab-password">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h5 class="mb-0">🔒 Сменить пароль</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="change_password" value="1">
+
+                                {% if password_form.errors %}
+                                <div class="alert alert-danger">
+                                    Проверьте поля:
+                                    <ul class="mb-0 mt-2">
+                                        {% for field, errors in password_form.errors.items %}
+                                        {% for error in errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">🔐 Текущий пароль</label>
+                                    <input type="password" name="old_password" class="form-control" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">🔒 Новый пароль</label>
+                                    <input type="password" name="new_password1" class="form-control" required>
+                                    <small class="text-muted">Минимум 8 символов</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">🔐 Подтверждение пароля</label>
+                                    <input type="password" name="new_password2" class="form-control" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-warning">
+                                    🔒 Сменить пароль
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Вкладка "Заказы" -->
+                <div class="tab-pane fade" id="tab-orders">
+                    <div class="card shadow">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">📦 Мои заказы</h5>
+                            <a href="{% url 'orders:list' %}" class="btn btn-sm btn-primary">Все заказы →</a>
+                        </div>
+                        <div class="card-body">
+                            {% if recent_orders %}
+                            {% for order in recent_orders %}
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-3">
+                                <div>
+                                    <h6 class="mb-1">Заказ #{{ order.id }}</h6>
+                                    <small class="text-muted">{{ order.created_at|date:"d.m.Y H:i" }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <div class="fw-bold text-primary mb-2">{{ order.total_price }} ₽</div>
+                                    {% if order.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">⏳ Ожидает</span>
+                                    <a href="{% url 'orders:cancel' order.id %}"
+                                       class="btn btn-sm btn-outline-danger ms-1">
+                                        ❌ Отменить
+                                    </a>
+                                    {% elif order.status == 'paid' %}
+                                    <span class="badge bg-info">💳 Оплачен</span>
+                                    {% elif order.status == 'completed' %}
+                                    <span class="badge bg-success">✅ Завершен</span>
+                                    {% elif order.status == 'cancelled' %}
+                                    <span class="badge bg-danger">❌ Отменен</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="text-center py-4">
+                                <div class="display-4 mb-2">📭</div>
+                                <p class="text-muted mb-0">У вас пока нет заказов</p>
+                                <a href="{% url 'courses:list' %}" class="btn btn-primary mt-3">Перейти к курсам</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка выхода -->
+            <div class="text-center mt-4">
+                <a href="{% url 'logout' %}" class="btn btn-outline-danger">
+                    🚪 Выйти из аккаунта
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

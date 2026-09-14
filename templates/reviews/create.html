@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Оставить отзыв{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header" style="background: var(--gradient); color: white;">
+                    <h3 class="mb-0">📝 Оставить отзыв</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <strong>Ошибка!</strong> Пожалуйста, исправьте:
+                                <ul class="mb-0 mt-2">
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <li>{{ field.label }}: {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{{ form.review_type.label }}</label>
+                            {{ form.review_type }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{{ form.rating.label }}</label>
+                            {{ form.rating }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{{ form.text.label }}</label>
+                            {{ form.text }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">{{ form.image.label }}</label>
+                            {{ form.image }}
+                            <small class="text-muted d-block">Можно прикрепить фото вашей работы</small>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                🚀 Отправить отзыв
+                            </button>
+                            <a href="{% url 'reviews:list' %}" class="btn btn-outline-secondary btn-lg">
+                                Отмена
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

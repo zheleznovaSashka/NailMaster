@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Отзывы{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h1>⭐ Отзывы</h1>
+        {% if user.is_authenticated %}
+        <a href="{% url 'reviews:create' %}" class="btn btn-primary btn-lg">
+            📝 Оставить отзыв
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+            Войдите, чтобы оставить отзыв
+        </a>
+        {% endif %}
+    </div>
+
+    <!-- ТЕКСТОВЫЕ ОТЗЫВЫ -->
+    {% if reviews %}
+    <h2 class="mb-4">Отзывы клиентов</h2>
+    <div class="row g-4 mb-5">
+        {% for review in reviews %}
+        <div class="col-md-4">
+            <div class="review-card shadow-sm h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="avatar-circle me-3">
+                        {{ review.user.username|first|upper }}
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">{{ review.user.username }}</h6>
+                        <div class="text-warning">⭐ {{ review.rating }}/5</div>
+                        <small class="text-muted">{{ review.get_review_type_display }}</small>
+                    </div>
+                </div>
+                <p class="card-text">{{ review.text }}</p>
+                {% if review.image %}
+                <img src="{{ review.image.url }}" class="img-fluid rounded mt-2" alt="Фото отзыва"
+                     style="max-height: 200px; width: 100%; object-fit: cover; cursor: pointer;"
+                     onclick="openImage('{{ review.image.url }}')">
+                {% endif %}
+                <small class="text-muted d-block mt-2">{{ review.created_at|date:"d.m.Y" }}</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5 mb-5">
+        <div class="display-1 mb-3">📭</div>
+        <h3>Пока нет отзывов</h3>
+        <p class="text-muted">Станьте первым, кто оставит отзыв!</p>
+    </div>
+    {% endif %}
+
+    <!-- СКРИНЫ С ПЛОЩАДОК -->
+    {% if screenshots %}
+    <h2 class="mb-4 mt-5">Отзывы с других площадок</h2>
+    <div class="row g-4">
+        {% for screenshot in screenshots %}
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm h-100">
+                <img src="{{ screenshot.image.url }}"
+                     class="card-img-top"
+                     alt="{{ screenshot.title }}"
+                     style="height: 300px; object-fit: cover; cursor: pointer;"
+                     onclick="openImage('{{ screenshot.image.url }}')">
+                <div class="card-body text-center">
+                    {% if screenshot.source == 'instagram' %}
+                    <span class="badge bg-danger"><i class="bi bi-instagram"></i> Instagram</span>
+                    {{% elif screenshot.source == 'max' %}
+                    <span class="badge bg-primary"><i class="bi bi-chat-dots"></i> MAX</span>
+                    {% elif screenshot.source == 'telegram' %}
+                    <span class="badge bg-info"><i class="bi bi-telegram"></i> Telegram</span>
+                    {% elif screenshot.source == 'vk' %}
+                    <span class="badge bg-primary">VK</span>
+                    {% elif screenshot.source == 'avito' %}
+                    <span class="badge bg-warning text-dark">Avito</span>
+                    {% elif screenshot.source == 'yandex' %}
+                    <span class="badge bg-secondary">Яндекс</span>
+                    {% else %}
+                    <span class="badge bg-dark">Отзыв</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Модальное окно для фото -->
+<div id="imageModal"
+     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; cursor: pointer;"
+     onclick="closeImage()">
+    <img id="modalImage" src="" alt="Фото"
+         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; max-height: 90%; border-radius: 10px;">
+</div>
+
+<script>
+    function openImage(url) {
+        document.getElementById('modalImage').src = url;
+        document.getElementById('imageModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImage() {
+        document.getElementById('imageModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+</script>
+{% endblock %}

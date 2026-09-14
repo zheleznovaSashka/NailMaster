@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Заказы{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item active">Заказы</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="mb-1">📦 Управление заказами</h1>
+            <p class="text-muted mb-0">Всего: {{ total_count }}</p>
+        </div>
+    </div>
+
+    <!-- Фильтры -->
+    <ul class="nav nav-pills mb-4 flex-wrap">
+        <li class="nav-item">
+            <a class="nav-link {% if filter_type == 'all' %}active{% endif %}" href="?filter=all">
+                📋 Все ({{ total_count }})
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if filter_type == 'pending' %}active{% endif %}" href="?filter=pending">
+                ⏳ Ожидают ({{ pending_count }})
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if filter_type == 'paid' %}active{% endif %}" href="?filter=paid">
+                💳 Оплачены ({{ paid_count }})
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if filter_type == 'completed' %}active{% endif %}" href="?filter=completed">
+                ✅ Завершены ({{ completed_count }})
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if filter_type == 'cancelled' %}active{% endif %}" href="?filter=cancelled">
+                ❌ Отменены ({{ cancelled_count }})
+            </a>
+        </li>
+    </ul>
+
+    <!-- Список заказов -->
+    {% if orders %}
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Клиент</th>
+                            <th>Курсы</th>
+                            <th>Сумма</th>
+                            <th>Дата</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td><strong>#{{ order.id }}</strong></td>
+                            <td>
+                                <strong>{{ order.user.username }}</strong>
+                                <br>
+                                <small class="text-muted">{{ order.user.email }}</small>
+                            </td>
+                            <td>
+                                {% for course in order.courses.all %}
+                                    <small class="d-block">• {{ course.title|truncatewords:4 }}</small>
+                                {% endfor %}
+                            </td>
+                            <td><strong class="text-primary">{{ order.total_price }} ₽</strong></td>
+                            <td><small>{{ order.created_at|date:"d.m.Y H:i" }}</small></td>
+                            <td>
+                                {% if order.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">⏳ Ожидает</span>
+                                {% elif order.status == 'paid' %}
+                                    <span class="badge bg-info">💳 Оплачен</span>
+                                {% elif order.status == 'completed' %}
+                                    <span class="badge bg-success">✅ Завершён</span>
+                                {% elif order.status == 'cancelled' %}
+                                    <span class="badge bg-danger">❌ Отменён</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="{% url 'dashboard:order_detail' order.pk %}" class="btn btn-sm btn-outline-primary" title="Подробнее">
+                                        👁️
+                                    </a>
+                                    <a href="{% url 'dashboard:order_delete' order.pk %}" class="btn btn-sm btn-outline-danger" title="Удалить">
+                                        🗑️
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div class="display-1 mb-3">📭</div>
+            <h3>Заказы не найдены</h3>
+            <p class="text-muted">Пока нет заказов в этой категории</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

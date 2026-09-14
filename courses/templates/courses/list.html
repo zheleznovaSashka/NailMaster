@@ -1,0 +1,37 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Курсы{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-4">Онлайн курсы</h1>
+    <div class="row g-4">
+        {% for course in courses %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                {% if course.image %}
+                    <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <span class="text-muted">Нет фото</span>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description|truncatewords:15 }}</p>
+                    <p class="fw-bold text-primary">{{ course.price }} ₽</p>
+                    <p class="text-muted small"><i class="bi bi-clock"></i> {{ course.duration }}</p>
+                    <a href="{% url 'cart:add' course.id %}" class="btn btn-success w-100 mt-2">В корзину</a>
+                    <a href="/courses/{{ course.id }}/" class="btn btn-primary w-100">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p class="text-muted">Пока нет курсов</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

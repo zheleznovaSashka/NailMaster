@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5 d-block">📞 Контакты</h1>
+
+    <div class="row g-4">
+        <!-- КОЛОНКА 1: Связаться -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow h-100">
+                <div class="card-header text-center" style="background: var(--gradient); color: white;">
+                    <h4 class="mb-0">📱 Связаться</h4>
+                </div>
+                <div class="card-body p-4">
+                    {% if contact %}
+                        <!-- Телефон -->
+                        {% if contact.phone %}
+                        <div class="text-center mb-4">
+                            <div class="contact-icon mx-auto mb-2" style="background: linear-gradient(135deg, #00b894, #55efc4);">
+                                <i class="bi bi-phone-fill"></i>
+                            </div>
+                            <small class="text-muted d-block mb-1">Телефон</small>
+                            <a href="tel:{{ contact.phone }}" class="h6 text-decoration-none text-dark fw-bold">
+                                {{ contact.phone }}
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        <!-- Email -->
+                        {% if contact.email %}
+                        <div class="text-center mb-4">
+                            <div class="contact-icon mx-auto mb-2" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                                <i class="bi bi-envelope-fill"></i>
+                            </div>
+                            <small class="text-muted d-block mb-1">Email</small>
+                            <a href="mailto:{{ contact.email }}" class="text-decoration-none text-dark fw-bold" style="word-break: break-all;">
+                                {{ contact.email }}
+                            </a>
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-muted text-center py-4">Информация скоро появится</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- КОЛОНКА 2: Мессенджеры и соцсети -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow h-100">
+                <div class="card-header text-center" style="background: var(--gradient); color: white;">
+                    <h4 class="mb-0">💬 Соцсети</h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-grid gap-3">
+                        {% if contact.instagram %}
+                        <a href="{{ contact.instagram }}" target="_blank" class="social-btn instagram-btn">
+                            <i class="bi bi-instagram"></i>
+                            <span>
+                                <strong>Instagram</strong>
+                                <small>Смотреть работы</small>
+                            </span>
+                        </a>
+                        {% endif %}
+
+                        {% if contact.telegram %}
+                        <a href="{{ contact.telegram }}" target="_blank" class="social-btn telegram-btn">
+                            <i class="bi bi-telegram"></i>
+                            <span>
+                                <strong>Telegram</strong>
+                                <small>Написать</small>
+                            </span>
+                        </a>
+                        {% endif %}
+
+                        {% if contact.max_messenger %}
+                        <a href="{{ contact.max_messenger }}" target="_blank" class="social-btn max-btn">
+                            <i class="bi bi-chat-dots-fill"></i>
+                            <span>
+                                <strong>MAX</strong>
+                                <small>Написать</small>
+                            </span>
+                        </a>
+                        {% endif %}
+
+                        {% if not contact.instagram and not contact.telegram and not contact.max_messenger %}
+                            <p class="text-muted text-center py-4">Соцсети скоро появятся</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- КОЛОНКА 3: Режим работы + Запись -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow h-100">
+                <div class="card-header text-center" style="background: var(--gradient); color: white;">
+                    <h4 class="mb-0">🕐 Режим работы</h4>
+                </div>
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="text-center mb-4">
+                        <div class="contact-icon mx-auto mb-3" style="background: linear-gradient(135deg, #fdcb6e, #f39c12);">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+
+                        <div class="mb-3">
+                            <p class="mb-1 h5"><strong>Пн-Пт:</strong></p>
+                            <p class="mb-3">9:00 - 21:00</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <p class="mb-1 h5"><strong>Сб-Вс:</strong></p>
+                            <p class="mb-0">10:00 - 18:00</p>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка онлайн-записи -->
+                    {% if contact.booking_url %}
+                    <div class="mt-auto">
+                        <hr>
+                        <a href="{{ contact.booking_url }}" target="_blank" class="btn btn-primary btn-lg w-100">
+                            📅 Записаться онлайн
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

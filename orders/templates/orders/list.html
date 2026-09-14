@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">📦 Мои заказы</h1>
+
+    {% if orders %}
+        <div class="row g-4">
+            {% for order in orders %}
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Заказ #{{ order.id }}</h5>
+                        {% if order.status == 'pending' %}
+                            <span class="badge bg-warning text-dark">⏳ Ожидает оплаты</span>
+                        {% elif order.status == 'paid' %}
+                            <span class="badge bg-info">💳 Оплачен</span>
+                        {% elif order.status == 'completed' %}
+                            <span class="badge bg-success">✅ Завершен</span>
+                        {% elif order.status == 'cancelled' %}
+                            <span class="badge bg-danger">❌ Отменен</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-2">
+                            <i class="bi bi-calendar"></i> {{ order.created_at|date:"d.m.Y H:i" }}
+                        </p>
+                        <p class="fw-bold fs-4 mb-3" style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            {{ order.total_price }} ₽
+                        </p>
+
+                        <h6>Курсы:</h6>
+                        <ul class="list-unstyled mb-3">
+                            {% for course in order.courses.all %}
+                            <li>
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                                {{ course.title }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <a href="{% url 'orders:detail' order.id %}" class="btn btn-primary w-100">
+                            Подробнее →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div class="display-1 mb-3">📭</div>
+            <h3>У вас пока нет заказов</h3>
+            <p class="text-muted">Перейдите в раздел курсов, чтобы сделать первый заказ</p>
+            <a href="{% url 'courses:list' %}" class="btn btn-primary btn-lg mt-3">Перейти к курсам</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

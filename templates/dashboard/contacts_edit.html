@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item active">Контакты</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header" style="background: var(--gradient); color: white;">
+                    <h3 class="mb-0">📞 Контактная информация</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <h5 class="mb-3">📱 Основные контакты</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">📞 Телефон *</label>
+                            <input type="text" name="phone" class="form-control form-control-lg"
+                                   value="{{ contact.phone|default:'' }}"
+                                   placeholder="+7 (999) 999-99-99" required>
+                            <small class="text-muted">Формат: +7 (999) 999-99-99</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">📧 Email *</label>
+                            <input type="email" name="email" class="form-control form-control-lg"
+                                   value="{{ contact.email|default:'' }}"
+                                   placeholder="mail@example.com" required>
+                        </div>
+
+                        <hr class="my-4">
+                        <h5 class="mb-3">🔗 Социальные сети</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-instagram text-danger"></i> Instagram
+                            </label>
+                            <input type="url" name="instagram" class="form-control"
+                                   value="{{ contact.instagram|default:'' }}"
+                                   placeholder="https://instagram.com/ваш_профиль">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-telegram text-info"></i> Telegram
+                            </label>
+                            <input type="url" name="telegram" class="form-control"
+                                   value="{{ contact.telegram|default:'' }}"
+                                   placeholder="https://t.me/ваш_профиль">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-chat-dots text-primary"></i> MAX
+                            </label>
+                            <input type="url" name="max_messenger" class="form-control"
+                                   value="{{ contact.max_messenger|default:'' }}"
+                                   placeholder="https://max.ru/ваш_профиль">
+                            <small class="text-muted">
+                                Ссылка на ваш профиль в мессенджере MAX (max.ru)
+                            </small>
+                        </div>
+
+                        <hr class="my-4">
+                        <h5 class="mb-3">📅 Онлайн-запись</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">🔗 Ссылка на запись</label>
+                            <input type="url" name="booking_url" class="form-control"
+                                   value="{{ contact.booking_url|default:'' }}"
+                                   placeholder="https://dikidi.ru/... или другая ссылка">
+                            <small class="text-muted">
+                                Ссылка на сервис онлайн-записи (Dikidi, Yclients и т.д.).
+                                Эта кнопка показывается на главной странице.
+                            </small>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                💾 Сохранить
+                            </button>
+                            <a href="{% url 'contacts:index' %}" class="btn btn-outline-secondary btn-lg"
+                               target="_blank">
+                                👁️ Посмотреть на сайте
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Подсказки -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h5 class="mb-3">💡 Советы</h5>
+                    <ul class="mb-0">
+                        <li><strong>Телефон и Email</strong> — показываются на странице "Контакты"</li>
+                        <li><strong>Instagram, Telegram, WhatsApp</strong> — кнопки соцсетей в футере</li>
+                        <li><strong>Ссылка на запись</strong> — кнопка "Записаться" на главной</li>
+                        <li>Если поле оставить пустым — оно не покажется на сайте</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

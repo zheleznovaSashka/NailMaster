@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Главная - Мастер маникюра{% endblock %}
+
+{% block content %}
+<!-- ГЕРОЙ-СЕКЦИЯ -->
+<section class="hero-section">
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-1 fw-bold mb-4">{{ master.name|default:"Мастер маникюра" }}</h1>
+
+                <!-- Информация о мастере с раскрытием -->
+                <div class="lead fs-5 mb-4 text-muted">
+                    {% if master %}
+                    <div id="aboutShort">
+                        {% if master.about|length > 150 %}
+                        {{ master.about|truncatewords:25 }}
+                        <a href="#" onclick="toggleAbout(event)" class="text-decoration-none fw-bold"
+                           style="color: var(--primary-color);">Читать далее →</a>
+                        {% else %}
+                        {{ master.about }}
+                        {% endif %}
+                    </div>
+                    <div id="aboutFull" style="display: none;">
+                        {{ master.about }}
+                        <a href="#" onclick="toggleAbout(event)" class="text-decoration-none fw-bold d-block mt-2"
+                           style="color: var(--primary-color);">← Свернуть</a>
+                    </div>
+                    {% else %}
+                    <p>Профессиональный мастер с многолетним опытом работы</p>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex gap-3 flex-wrap mb-4">
+                    <a href="#portfolio" class="btn btn-primary btn-lg">✨ Смотреть работы</a>
+                    <a href="{{ contact.booking_url|default:'#' }}" class="btn btn-outline-secondary btn-lg">📅
+                        Записаться</a>
+                </div>
+                <div class="d-flex gap-5 hero-stats justify-content-lg-start justify-content-center">
+                    <div>
+                        <span class="h2 fw-bold">{{ master.experience|default:"5" }}+</span>
+                        <p class="text-muted mb-0">лет опыта</p>
+                    </div>
+                    <div>
+                        <span class="h2 fw-bold">{{ works_count }}+</span>
+                        <p class="text-muted mb-0">работ</p>
+                    </div>
+                    <div>
+                        <span class="h2 fw-bold">{{ courses_count }}+</span>
+                        <p class="text-muted mb-0">курсов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                {% if master.photo %}
+                <img src="{{ master.photo.url }}" alt="{{ master.name }}"
+                     class="img-fluid rounded-circle float-animation"
+                     style="max-width: 400px; width: 100%; aspect-ratio: 1/1; object-fit: cover;">
+                {% else %}
+                <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center shadow-lg float-animation"
+                     style="width: 350px; height: 350px; max-width: 100%;">
+                    <span class="display-1">💅</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- РАБОТЫ -->
+<section id="portfolio">
+    <div class="container">
+        <h2 class="text-center mb-5 d-block fade-in-up">Мои работы</h2>
+        <div class="row g-4">
+            {% for work in works %}
+            <div class="col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ work.image.url }}" class="card-img-top" alt="{{ work.title }}"
+                         style="height: 250px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ work.title }}</h5>
+                        <p class="card-text text-muted">{{ work.description|truncatewords:15 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">Пока нет работ</p>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'portfolio:list' %}" class="btn btn-primary btn-lg">Все работы →</a>
+        </div>
+    </div>
+</section>
+
+<!-- КУРСЫ -->
+<section style="background: var(--light-bg);">
+    <div class="container">
+        <h2 class="text-center mb-5 d-block fade-in-up">Онлайн курсы</h2>
+        <div class="row g-4">
+            {% for course in courses %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}"
+                         style="height: 220px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text text-muted flex-grow-1">{{ course.description|truncatewords:15 }}</p>
+                        <p class="fw-bold fs-4 mb-3"
+                           style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            {{ course.price }} ₽</p>
+                        <a href="{% url 'courses:detail' course.id %}" class="btn btn-primary w-100">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">Пока нет курсов</p>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'courses:list' %}" class="btn btn-primary btn-lg">Все курсы →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ПОЧЕМУ Я -->
+<section style="background: var(--light-bg);">
+    <div class="container">
+        <h2 class="text-center mb-5 d-block">Почему выбирают меня</h2>
+        <div class="row g-4">
+            <div class="col-md-3 col-sm-6 fade-in-up">
+                <div class="why-me-card">
+                    <div class="why-me-icon" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe);">
+                        <i class="bi bi-award-fill"></i>
+                    </div>
+                    <h5>Опыт</h5>
+                    <p class="text-muted mb-0">{{ master.experience|default:"5" }}+ лет работы с клиентами</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 fade-in-up">
+                <div class="why-me-card">
+                    <div class="why-me-icon" style="background: linear-gradient(135deg, #00b894, #55efc4);">
+                        <i class="bi bi-heart-fill"></i>
+                    </div>
+                    <h5>Качество</h5>
+                    <p class="text-muted mb-0">Только качественные материалы</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 fade-in-up">
+                <div class="why-me-card">
+                    <div class="why-me-icon" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <i class="bi bi-gem"></i>
+                    </div>
+                    <h5>Дизайн</h5>
+                    <p class="text-muted mb-0">Уникальный дизайн под ваш образ</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 fade-in-up">
+                <div class="why-me-card">
+                    <div class="why-me-icon" style="background: linear-gradient(135deg, #fdcb6e, #f39c12);">
+                        <i class="bi bi-clock-fill"></i>
+                    </div>
+                    <h5>Удобство</h5>
+                    <p class="text-muted mb-0">Онлайн-запись в любое время</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ОТЗЫВЫ (текстовые) -->
+<section>
+    <div class="container">
+        <h2 class="text-center mb-5 d-block fade-in-up">Отзывы клиентов</h2>
+
+        {% if user.is_authenticated %}
+        <div class="text-center mb-4">
+            <a href="{% url 'reviews:create' %}" class="btn btn-primary">📝 Оставить отзыв</a>
+        </div>
+        {% endif %}
+
+        <div class="row g-4">
+            {% for review in reviews %}
+            <div class="col-md-4">
+                <div class="review-card shadow-sm h-100">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="avatar-circle me-3">
+                            {{ review.user.username|first|upper }}
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">{{ review.user.username }}</h6>
+                            <div class="text-warning">⭐ {{ review.rating }}/5</div>
+                            <small class="text-muted">{{ review.get_review_type_display }}</small>
+                        </div>
+                    </div>
+                    <p class="card-text mb-3">{{ review.text|truncatewords:25 }}</p>
+
+                    {% if review.image %}
+                    <img src="{{ review.image.url }}" class="img-fluid rounded mt-2" alt="Фото отзыва"
+                         style="max-height: 200px; width: 100%; object-fit: cover; cursor: pointer;"
+                         onclick="openImage('{{ review.image.url }}')">
+                    {% endif %}
+
+                    <small class="text-muted d-block mt-2">{{ review.created_at|date:"d.m.Y" }}</small>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">Пока нет отзывов</p>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'reviews:list' %}" class="btn btn-primary btn-lg">Все отзывы →</a>
+        </div>
+    </div>
+</section>
+
+<!-- СКРИНЫ ОТЗЫВОВ С ДРУГИХ ПЛОЩАДОК -->
+{% if screenshots %}
+<section style="background: #f8f0ff;">
+    <div class="container">
+        <h2 class="text-center mb-5 d-block">Отзывы с других площадок</h2>
+        <div class="row g-4">
+            {% for screenshot in screenshots %}
+            <div class="col-md-3 col-sm-6">
+                <div class="card shadow-sm h-100">
+                    <img src="{{ screenshot.image.url }}"
+                         class="card-img-top"
+                         alt="{{ screenshot.title }}"
+                         style="height: 300px; object-fit: cover; cursor: pointer;"
+                         onclick="openImage('{{ screenshot.image.url }}')">
+                    <div class="card-body text-center">
+                        {% if screenshot.source == 'instagram' %}
+                        <span class="badge bg-danger"><i class="bi bi-instagram"></i> Instagram</span>
+                        {% elif screenshot.source == 'max' %}
+                        <span class="badge bg-primary"><i class="bi bi-chat-dots"></i> MAX</span>
+                        {% elif screenshot.source == 'telegram' %}
+                        <span class="badge bg-info"><i class="bi bi-telegram"></i> Telegram</span>
+                        {% elif screenshot.source == 'vk' %}
+                        <span class="badge bg-primary">VK</span>
+                        {% elif screenshot.source == 'avito' %}
+                        <span class="badge bg-warning text-dark">Avito</span>
+                        {% elif screenshot.source == 'yandex' %}
+                        <span class="badge bg-secondary">Яндекс</span>
+                        {% else %}
+                        <span class="badge bg-dark">Отзыв</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
+<section style="background: var(--gradient); color: #fff;">
+    <div class="container text-center">
+        <h2 class="text-white mb-4 d-block" style="background: none; -webkit-text-fill-color: #fff;">Готовы к
+            преображению?</h2>
+        <p class="lead mb-4">Запишитесь прямо сейчас!</p>
+        <a href="{{ contact.booking_url|default:'#' }}" class="btn btn-light btn-lg px-5"
+           style="color: var(--primary-color);">📅 Записаться</a>
+    </div>
+</section>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО -->
+<div id="imageModal"
+     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; cursor: pointer;"
+     onclick="closeImage()">
+    <img id="modalImage" src="" alt="Фото"
+         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; max-height: 90%; border-radius: 10px;">
+</div>
+
+<script>
+    function toggleAbout(event) {
+        event.preventDefault();
+        const short = document.getElementById('aboutShort');
+        const full = document.getElementById('aboutFull');
+
+        if (short.style.display === 'none') {
+            short.style.display = 'block';
+            full.style.display = 'none';
+        } else {
+            short.style.display = 'none';
+            full.style.display = 'block';
+        }
+    }
+
+    function openImage(url) {
+        document.getElementById('modalImage').src = url;
+        document.getElementById('imageModal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImage() {
+        document.getElementById('imageModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+</script>
+{% endblock %}

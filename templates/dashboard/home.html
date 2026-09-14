@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Панель управления{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Заголовок -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">⚙️ Панель управления</h1>
+            <p class="text-muted mb-0">Добро пожаловать, {{ user.first_name|default:user.username }}!</p>
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+            ← На сайт
+        </a>
+    </div>
+
+    <!-- Статистика -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm h-100 border-0"
+                 style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Всего пользователей</h6>
+                            <h2 class="mb-0">{{ total_users }}</h2>
+                            {% if new_users > 0 %}
+                            <small>+{{ new_users }} за неделю</small>
+                            {% endif %}
+                        </div>
+                        <div style="font-size: 2.5rem; opacity: 0.5;">👥</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm h-100 border-0"
+                 style="background: linear-gradient(135deg, #00b894, #55efc4); color: white;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Всего заказов</h6>
+                            <h2 class="mb-0">{{ total_orders }}</h2>
+                        </div>
+                        <div style="font-size: 2.5rem; opacity: 0.5;">📦</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm h-100 border-0"
+                 style="background: linear-gradient(135deg, #fdcb6e, #f39c12); color: white;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Доход</h6>
+                            <h2 class="mb-0">{{ total_income|floatformat:0 }} ₽</h2>
+                            <small>+{{ recent_income|floatformat:0 }} ₽ за месяц</small>
+                        </div>
+                        <div style="font-size: 2.5rem; opacity: 0.5;">💰</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm h-100 border-0"
+                 style="background: linear-gradient(135deg, #fd79a8, #e84393); color: white;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white-50 mb-1">Отзывов</h6>
+                            <h2 class="mb-0">{{ total_reviews }}</h2>
+                            {% if pending_reviews > 0 %}
+                            <small>⚠️ {{ pending_reviews }} на модерации</small>
+                            {% endif %}
+                        </div>
+                        <div style="font-size: 2.5rem; opacity: 0.5;">⭐</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Контент и последние заказы -->
+    <div class="row g-4">
+        <!-- Левая колонка: Управление контентом -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header">
+                    <h5 class="mb-0">📊 Управление контентом</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{% url 'dashboard:works_list' %}" class="text-decoration-none">
+                            🖼️ Работы: <strong class="ms-2">{{ works_count }}</strong>
+                        </a>
+                        <a href="{% url 'dashboard:work_create' %}" class="btn btn-sm btn-primary">➕</a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{% url 'dashboard:courses_list' %}" class="text-decoration-none">
+                            📚 Курсы: <strong class="ms-2">{{ courses_count }}</strong>
+                        </a>
+                        <a href="{% url 'dashboard:course_create' %}" class="btn btn-sm btn-primary">➕</a>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{% url 'dashboard:screenshots_list' %}" class="text-decoration-none">
+                            📸 Скрины: <strong class="ms-2">{{ screenshots_count }}</strong>
+                        </a>
+                        <a href="{% url 'dashboard:screenshot_create' %}" class="btn btn-sm btn-primary">➕</a>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{% url 'dashboard:reviews_list' %}" class="text-decoration-none">
+                            ⭐ Отзывы: <strong class="ms-2">{{ total_reviews }}</strong>
+                        </a>
+                        {% if pending_reviews > 0 %}
+                        <a href="{% url 'dashboard:reviews_list' %}?filter=pending"
+                           class="badge bg-warning text-dark text-decoration-none">
+                            {{ pending_reviews }} новых
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{% url 'dashboard:master_edit' %}" class="text-decoration-none">
+                            👤 Информация о мастере
+                        </a>
+                        <span class="text-muted">✏️</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{% url 'dashboard:contacts_edit' %}" class="text-decoration-none">
+                            📞 Контакты
+                        </a>
+                        <span class="text-muted">✏️</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'dashboard:users_list' %}" class="text-decoration-none">
+                            👥 Пользователи: <strong class="ms-2">{{ total_users }}</strong>
+                        </a>
+                        <span class="text-muted">👁️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка: Последние заказы -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">📦 Последние заказы</h5>
+                    <a href="{% url 'dashboard:orders_list' %}" class="btn btn-sm btn-primary">
+                        Все заказы →
+                    </a>
+                </div>
+                <div class="card-body">
+                    {% if last_orders %}
+                    {% for order in last_orders %}
+                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                        <div>
+                            <a href="{% url 'dashboard:order_detail' order.pk %}" class="text-decoration-none">
+                                <strong>Заказ #{{ order.id }}</strong>
+                            </a>
+                            <br>
+                            <small class="text-muted">{{ order.user.username }} - {{ order.created_at|date:"d.m.Y H:i"
+                                }}</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="fw-bold text-primary">{{ order.total_price }} ₽</div>
+                            <div class="d-flex gap-1 mt-1 justify-content-end">
+                                {% if order.status == 'pending' %}
+                                <span class="badge bg-warning text-dark">Ожидает</span>
+                                {% elif order.status == 'paid' %}
+                                <span class="badge bg-info">Оплачен</span>
+                                {% elif order.status == 'completed' %}
+                                <span class="badge bg-success">Завершён</span>
+                                {% elif order.status == 'cancelled' %}
+                                <span class="badge bg-danger">Отменён</span>
+                                {% endif %}
+
+                                <a href="{% url 'dashboard:order_delete' order.pk %}"
+                                   class="btn btn-sm btn-outline-danger py-0 px-1"
+                                   title="Удалить заказ"
+                                   style="font-size: 0.7rem;">
+                                    ❌
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-muted text-center py-3">Пока нет заказов</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Отзывы на модерации -->
+    {% if last_reviews %}
+    <div class="card shadow-sm mt-4">
+        <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">⚠️ Отзывы на модерации ({{ pending_reviews }})</h5>
+            <a href="{% url 'dashboard:reviews_list' %}?filter=pending" class="btn btn-sm btn-dark">
+                Управлять →
+            </a>
+        </div>
+        <div class="card-body">
+            {% for review in last_reviews %}
+            <div class="border-bottom py-2">
+                <div class="d-flex justify-content-between">
+                    <strong>{{ review.user.username }}</strong>
+                    <small class="text-muted">{{ review.created_at|date:"d.m.Y H:i" }}</small>
+                </div>
+                <p class="mb-1">{{ review.text|truncatewords:30 }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">⭐ {{ review.rating }}/5 - {{ review.get_review_type_display }}</small>
+                    <div class="d-flex gap-1">
+                        <a href="{% url 'dashboard:review_approve' review.pk %}" class="btn btn-sm btn-success">✅</a>
+                        <a href="{% url 'dashboard:review_reject' review.pk %}" class="btn btn-sm btn-warning">⚠️</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Управление скринами отзывов{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item active">Скрины отзывов</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="mb-1">📸 Скрины отзывов</h1>
+            <p class="text-muted mb-0">Всего: {{ screenshots.count }}</p>
+        </div>
+        <a href="{% url 'dashboard:screenshot_create' %}" class="btn btn-primary btn-lg">
+            ➕ Добавить скрин
+        </a>
+    </div>
+
+    {% if screenshots %}
+        <div class="row g-3">
+            {% for screenshot in screenshots %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card shadow-sm h-100">
+                    <div class="position-relative">
+                        <img src="{{ screenshot.image.url }}" class="card-img-top" alt="{{ screenshot.title }}" style="height: 250px; object-fit: cover;">
+                        {% if screenshot.is_featured %}
+                            <span class="badge bg-success position-absolute top-0 end-0 m-2">✨ На главной</span>
+                        {% endif %}
+                        <span class="badge bg-primary position-absolute top-0 start-0 m-2">{{ screenshot.get_source_display }}</span>
+                    </div>
+
+                    <div class="card-body">
+                        <h6 class="card-title mb-1">{{ screenshot.title|default:"Без названия" }}</h6>
+                        <small class="text-muted">Порядок: {{ screenshot.order }}</small>
+                    </div>
+
+                    <div class="card-footer bg-white border-top">
+                        <div class="d-flex gap-1">
+                            <a href="{% url 'dashboard:screenshot_edit' screenshot.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1">
+                                ✏️
+                            </a>
+                            <a href="{% url 'dashboard:screenshot_toggle' screenshot.pk %}" class="btn btn-sm {% if screenshot.is_featured %}btn-warning{% else %}btn-outline-success{% endif %}">
+                                {% if screenshot.is_featured %}⭐{% else %}☆{% endif %}
+                            </a>
+                            <a href="{% url 'dashboard:screenshot_delete' screenshot.pk %}" class="btn btn-sm btn-outline-danger">
+                                🗑️
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div class="display-1 mb-3">📸</div>
+            <h3>Пока нет скринов</h3>
+            <p class="text-muted">Добавьте скрины отзывов с других площадок (Instagram, WhatsApp и т.д.)</p>
+            <a href="{% url 'dashboard:screenshot_create' %}" class="btn btn-primary btn-lg mt-3">
+                ➕ Добавить первый скрин
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

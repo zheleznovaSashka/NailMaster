@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Удалить отзыв{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">⚠️ Удаление отзыва</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="text-center mb-3">
+                        <div class="avatar-circle d-inline-flex" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                            {{ review.user.username|first|upper }}
+                        </div>
+                        <h5 class="mt-2">{{ review.user.username }}</h5>
+                        <div class="text-warning">⭐ {{ review.rating }}/5</div>
+                    </div>
+
+                    <div class="alert alert-secondary">
+                        <strong>Текст отзыва:</strong>
+                        <p class="mb-0 mt-2">{{ review.text }}</p>
+                    </div>
+
+                    <p class="text-center text-muted">Удалить этот отзыв навсегда?</p>
+
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <div class="d-flex gap-2 justify-content-center">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                🗑️ Да, удалить
+                            </button>
+                            <a href="{% url 'dashboard:reviews_list' %}" class="btn btn-outline-secondary btn-lg">
+                                ← Отмена
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Информация о мастере{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item active">Информация о мастере</li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow">
+                <div class="card-header" style="background: var(--gradient); color: white;">
+                    <h3 class="mb-0">👤 Информация о мастере</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <!-- Левая колонка: фото -->
+                            <div class="col-md-4 text-center mb-4">
+                                <label class="form-label fw-bold d-block mb-3">📸 Фото мастера</label>
+
+                                {% if master.photo %}
+                                    <img src="{{ master.photo.url }}" alt="{{ master.name }}"
+                                         class="rounded-circle mb-3"
+                                         style="width: 200px; height: 200px; object-fit: cover; border: 4px solid #6c5ce7;">
+                                {% else %}
+                                    <div class="rounded-circle d-inline-flex align-items-center justify-content-center text-white mb-3"
+                                         style="width: 200px; height: 200px; background: var(--gradient); font-size: 80px;">
+                                        💅
+                                    </div>
+                                {% endif %}
+
+                                <input type="file" name="photo" class="form-control" accept="image/*">
+                                <small class="text-muted d-block mt-2">Рекомендуемый размер: 400x400 px</small>
+                            </div>
+
+                            <!-- Правая колонка: текстовые поля -->
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">📛 Имя мастера *</label>
+                                    <input type="text" name="name" class="form-control form-control-lg"
+                                           value="{{ master.name|default:'' }}"
+                                           placeholder="Например: Анна Иванова" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">🎯 Специализация</label>
+                                    <input type="text" name="specialization" class="form-control"
+                                           value="{{ master.specialization|default:'' }}"
+                                           placeholder="Например: Маникюр, педикюр, дизайн">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">⏱️ Опыт работы (лет)</label>
+                                    <input type="number" name="experience" class="form-control"
+                                           value="{{ master.experience|default:0 }}"
+                                           min="0" max="50">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">📝 О себе</label>
+                                    <textarea name="about" class="form-control" rows="8"
+                                              placeholder="Расскажите о себе, своём опыте, подходе к работе...">{{ master.about|default:'' }}</textarea>
+                                    <small class="text-muted">
+                                        Этот текст показывается на главной странице.
+                                        Если он длинный — появится кнопка "Читать далее".
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                💾 Сохранить изменения
+                            </button>
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-lg" target="_blank">
+                                👁️ Посмотреть на сайте
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Подсказки -->
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h5 class="mb-3">💡 Советы по заполнению</h5>
+                    <ul class="mb-0">
+                        <li><strong>Имя мастера</strong> — будет крупно отображаться на главной</li>
+                        <li><strong>Фото</strong> — лучше квадратное, хорошего качества</li>
+                        <li><strong>О себе</strong> — расскажите о своём опыте, подходе, почему клиенты выбирают вас</li>
+                        <li><strong>Опыт работы</strong> — используется для счётчика на главной</li>
+                        <li><strong>Специализация</strong> — что вы делаете лучше всего</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

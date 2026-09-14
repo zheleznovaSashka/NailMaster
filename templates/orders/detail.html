@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">Заказ #{{ order.id }}</h3>
+                    {% if order.status == 'pending' %}
+                    <span class="badge bg-warning text-dark fs-6">⏳ Ожидает оплаты</span>
+                    {% elif order.status == 'paid' %}
+                    <span class="badge bg-info fs-6">💳 Оплачен</span>
+                    {% elif order.status == 'completed' %}
+                    <span class="badge bg-success fs-6">✅ Завершен</span>
+                    {% elif order.status == 'cancelled' %}
+                    <span class="badge bg-danger fs-6">❌ Отменен</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>📅 Дата:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+                            <p><strong>👤 Клиент:</strong> {{ order.user.username }}</p>
+                            <p><strong>📧 Email:</strong> {{ order.user.email }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            {% if order.payment_id %}
+                            <p><strong>💳 ID платежа:</strong> {{ order.payment_id }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h5 class="mb-3">Курсы в заказе:</h5>
+                    {% for course in order.courses.all %}
+                    <div class="card mb-3">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-3">
+                                {% if course.image %}
+                                <img src="{{ course.image.url }}" class="img-fluid rounded-start"
+                                     alt="{{ course.title }}" style="height: 100px; width: 100%; object-fit: cover;">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ course.title }}</h5>
+                                    <p class="card-text text-muted">{{ course.description|truncatewords:15 }}</p>
+                                    <p class="fw-bold mb-0" style="color: var(--primary-color);">{{ course.price }}
+                                        ₽</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4>Итого:</h4>
+                        <h3 class="fw-bold"
+                            style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            {{ order.total_price }} ₽
+                        </h3>
+                    </div>
+
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="{% url 'orders:list' %}" class="btn btn-outline-secondary">
+                            ← Мои заказы
+                        </a>
+                        {% if order.status == 'pending' %}
+                        <button class="btn btn-success" onclick="alert('Оплата будет доступна позже!')">
+                            💳 Оплатить
+                        </button>
+                        <a href="{% url 'orders:cancel' order.id %}" class="btn btn-outline-danger">
+                            ❌ Отменить заказ
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
