@@ -144,24 +144,45 @@
 
 <footer class="bg-dark text-white text-center py-4 mt-5">
     <div class="container">
-        <p class="mb-2">
-            <a href="/pages/privacy/" class="text-white-50 text-decoration-none me-3">Политика конфиденциальности</a>
-            <a href="/pages/offer/" class="text-white-50 text-decoration-none">Публичная оферта</a>
+        <!-- Ссылки на документы -->
+        <p class="mb-3">
+            <a href="/pages/privacy/" class="text-white-50 text-decoration-none me-3">
+                Политика конфиденциальности
+            </a>
+            <a href="/pages/offer/" class="text-white-50 text-decoration-none">
+                Публичная оферта
+            </a>
         </p>
-        <p class="mb-2">© 2026 Nail Master. Все права защищены.</p>
-        <p class="mb-0">
+
+        <!-- Соцсети и контакты -->
+        <p class="mb-3">
             {% if global_contact %}
-            {% if global_contact.telegram %}
-            <a href="{{ global_contact.telegram }}" target="_blank" class="text-white-50 text-decoration-none me-3">
-                <i class="bi bi-telegram fs-4"></i>
-            </a>
+                {% if global_contact.telegram %}
+                    <a href="{{ global_contact.telegram }}" target="_blank" class="text-white-50 text-decoration-none me-3" title="Telegram">
+                        <i class="bi bi-telegram fs-4"></i>
+                    </a>
+                {% endif %}
+                {% if global_contact.max_messenger %}
+                    <a href="{{ global_contact.max_messenger }}" target="_blank" class="text-white-50 text-decoration-none me-3" title="MAX">
+                        <i class="bi bi-chat-dots fs-4"></i>
+                    </a>
+                {% endif %}
+                {% if global_contact.phone %}
+                    <a href="tel:{{ global_contact.phone }}" class="text-white-50 text-decoration-none me-3" title="Позвонить">
+                        <i class="bi bi-telephone fs-4"></i>
+                    </a>
+                {% endif %}
+                {% if global_contact.email %}
+                    <a href="mailto:{{ global_contact.email }}" class="text-white-50 text-decoration-none" title="Email">
+                        <i class="bi bi-envelope fs-4"></i>
+                    </a>
+                {% endif %}
             {% endif %}
-            {% if global_contact.max_messenger %}
-            <a href="{{ global_contact.max_messenger }}" target="_blank" class="text-white-50 text-decoration-none">
-                <i class="bi bi-chat-dots fs-4"></i>
-            </a>
-            {% endif %}
-            {% endif %}
+        </p>
+
+        <!-- Копирайт -->
+        <p class="mb-0 text-white-50 small">
+            © 2026 Nail Master. Все права защищены.
         </p>
     </div>
 </footer>
