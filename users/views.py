@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from core.utils import send_notification
+from django.utils import timezone
 
 
 def register_view(request):

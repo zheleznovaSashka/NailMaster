@@ -16,16 +16,16 @@
                         {% csrf_token %}
 
                         {% if form.errors %}
-                            <div class="alert alert-danger">
-                                <strong>Ошибка!</strong> Проверьте поля:
-                                <ul class="mb-0 mt-2">
-                                    {% for field in form %}
-                                        {% for error in field.errors %}
-                                            <li><strong>{{ field.label }}:</strong> {{ error }}</li>
-                                        {% endfor %}
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                        <div class="alert alert-danger">
+                            <strong>Ошибка!</strong> Проверьте поля:
+                            <ul class="mb-0 mt-2">
+                                {% for field in form %}
+                                {% for error in field.errors %}
+                                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
                         {% endif %}
 
                         <div class="mb-3">
@@ -68,6 +68,16 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold">🔐 Подтверждение пароля *</label>
                             {{ form.password2 }}
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="agree_terms" name="agree_terms"
+                                   required>
+                            <label class="form-check-label" for="agree_terms">
+                                Я согласен с
+                                <a href="/pages/offer/" target="_blank">условиями публичной оферты</a>
+                                и
+                                <a href="/pages/privacy/" target="_blank">политикой конфиденциальности</a>
+                            </label>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 btn-lg">

@@ -8,6 +8,10 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name='Аватар')
     is_banned = models.BooleanField(default=False, verbose_name='Забанен')
 
+    # Согласие на обработку персональных данных
+    agreed_to_terms = models.BooleanField(default=False, verbose_name='Согласие с офертой')
+    agreed_at = models.DateTimeField(blank=True, null=True, verbose_name='Дата согласия')
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
