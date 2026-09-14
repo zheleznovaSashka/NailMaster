@@ -1,3 +1,9 @@
+/* ==================== ШРИФТЫ ==================== */
+
+body {
+    font-family: var(--font-body);
+}
+
 /* ==================== ОСНОВНЫЕ ==================== */
 :root {
     --primary-color: #6c5ce7;
@@ -511,36 +517,43 @@ footer a:hover {
 
 /* ==================== КРАСИВЫЕ АНИМАЦИИ ==================== */
 
-/* Появление при скролле */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
+/* Появление при скролле — БЕЗОПАСНЫЙ ВАРИАНТ */
+/* По умолчанию ВСЁ ВИДИМО. Анимация только если JS её включил */
+
+.fade-in-up,
+.fade-in-left,
+.fade-in-right {
+    opacity: 1;
+    transform: none;
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.fade-in-up.visible {
+body.js-ready .fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+body.js-ready .fade-in-up.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-.fade-in-left {
+body.js-ready .fade-in-left {
     opacity: 0;
     transform: translateX(-50px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.fade-in-left.visible {
+body.js-ready .fade-in-left.visible {
     opacity: 1;
     transform: translateX(0);
 }
 
-.fade-in-right {
+body.js-ready .fade-in-right {
     opacity: 0;
     transform: translateX(50px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.fade-in-right.visible {
+body.js-ready .fade-in-right.visible {
     opacity: 1;
     transform: translateX(0);
 }
@@ -773,4 +786,118 @@ html {
 
 .favorite-btn.active {
     filter: drop-shadow(0 0 8px rgba(253, 121, 168, 0.9));
+}
+
+/* ==================== ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ ==================== */
+.hero-decor-1,
+.hero-decor-2,
+.hero-decor-3 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-decor-1 {
+    width: 400px;
+    height: 400px;
+    background: #6c5ce7;
+    top: -100px;
+    right: -100px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.hero-decor-2 {
+    width: 300px;
+    height: 300px;
+    background: #fd79a8;
+    bottom: -80px;
+    left: -80px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.hero-decor-3 {
+    width: 200px;
+    height: 200px;
+    background: #fdcb6e;
+    top: 50%;
+    left: 30%;
+    animation: float 7s ease-in-out infinite;
+}
+/* ==================== МИКРОАНИМАЦИИ ==================== */
+
+/* Иконки в навигации */
+.nav-link i {
+    transition: transform 0.3s;
+    display: inline-block;
+}
+
+.nav-link:hover i {
+    transform: scale(1.2) rotate(-5deg);
+}
+
+/* Карточки курсов/работ */
+.card img {
+    transition: transform 0.5s ease;
+}
+
+.card:hover img {
+    transform: scale(1.08);
+}
+
+/* Ссылки в футере */
+footer a {
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+footer a:hover {
+    transform: translateY(-3px);
+    color: var(--secondary-color) !important;
+}
+
+/* Плавное появление при загрузке */
+main {
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Пульсация звёздочки в логотипе */
+.logo-star {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* При наведении на логотип — звёздочка крутится */
+.navbar-brand:hover .logo-star {
+    animation: spinPulse 0.6s ease-in-out infinite;
+}
+
+@keyframes spinPulse {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(15deg);
+    }
 }
