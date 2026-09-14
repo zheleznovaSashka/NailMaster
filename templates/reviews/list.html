@@ -37,9 +37,11 @@
                 </div>
                 <p class="card-text">{{ review.text }}</p>
                 {% if review.image %}
-                <img src="{{ review.image.url }}" class="img-fluid rounded mt-2" alt="Фото отзыва"
-                     style="max-height: 200px; width: 100%; object-fit: cover; cursor: pointer;"
-                     onclick="openImage('{{ review.image.url }}')">
+                <<img src="{{ review.image.url }}"
+                      class="img-fluid rounded mt-2"
+                      alt="Фото отзыва"
+                      style="max-height: 200px; width: 100%; object-fit: cover; cursor: pointer;"
+                      onclick="openImage('{{ review.image.url }}')">
                 {% endif %}
                 <small class="text-muted d-block mt-2">{{ review.created_at|date:"d.m.Y" }}</small>
             </div>

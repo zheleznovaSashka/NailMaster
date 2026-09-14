@@ -10,15 +10,33 @@
         {% for course in courses %}
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
-                {% if course.image %}
-                <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}"
-                     style="height: 200px; object-fit: cover;">
-                {% else %}
-                <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
-                     style="height: 200px;">
-                    <span class="text-muted">Нет фото</span>
+                <div class="position-relative">
+                    {% if course.image %}
+                    <img src="{{ course.image.url }}"
+                         class="card-img-top"
+                         alt="{{ course.title }}"
+                         style="height: 200px; object-fit: cover; cursor: pointer;"
+                         onclick="openImage('{{ course.image.url }}')">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                         style="height: 200px;">
+                        <span class="text-muted">Нет фото</span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Кнопка ❤️ -->
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'users:toggle_course_favorite' course.id %}"
+                          style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                        {% csrf_token %}
+                        <button type="submit"
+                                style="background: transparent; border: none; padding: 0; cursor: pointer; font-size: 2rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));"
+                                title="{% if course.id in favorite_course_ids %}Убрать из избранного{% else %}В избранное{% endif %}">
+                            {% if course.id in favorite_course_ids %}❤️{% else %}🤍{% endif %}
+                        </button>
+                    </form>
+                    {% endif %}
                 </div>
-                {% endif %}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ course.title }}</h5>
                     <p class="card-text">{{ course.description|truncatewords:15 }}</p>

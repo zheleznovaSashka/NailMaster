@@ -21,3 +21,52 @@ class CustomUser(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class Favorite(models.Model):
+    """Избранное пользователя (работы и курсы)"""
+
+    user = models.ForeignKey(
+        'CustomUser',
+        on_delete=models.CASCADE,
+        related_name='favorites',
+        verbose_name='Пользователь'
+    )
+    work = models.ForeignKey(
+        'portfolio.Work',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='favorited_by',
+        verbose_name='Работа'
+    )
+    course = models.ForeignKey(
+        'courses.Course',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='favorited_by',
+        verbose_name='Курс'
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')
+
+    class Meta:
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранное'
+        ordering = ['-created_at']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'work'],
+                name='unique_user_work_favorite',
+                condition=models.Q(work__isnull=False)
+            ),
+            models.UniqueConstraint(
+                fields=['user', 'course'],
+                name='unique_user_course_favorite',
+                condition=models.Q(course__isnull=False)
+            ),
+        ]
+
+    def __str__(self):
+        item = self.work or self.course
+        return f'{self.user.username} → {item}'

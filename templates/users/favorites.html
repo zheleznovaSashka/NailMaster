@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Избранное{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Заголовок -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="mb-1">❤️ Избранное</h1>
+            <p class="text-muted mb-0">
+                Сохранено: {{ works_count|add:courses_count }}
+                {% if works_count and courses_count %}
+                ({{ works_count }} работ, {{ courses_count }} курсов)
+                {% endif %}
+            </p>
+        </div>
+        {% if works_count > 0 or courses_count > 0 %}
+        <a href="{% url 'users:clear_favorites' %}"
+           class="btn btn-outline-danger"
+           onclick="return confirm('Очистить всё избранное? Это действие нельзя отменить.')">
+            🗑️ Очистить всё
+        </a>
+        {% endif %}
+    </div>
+
+    {% if favorite_works or favorite_courses %}
+    <div class="row g-4">
+
+        <!-- КОЛОНКА 1: РАБОТЫ -->
+        <div class="col-lg-6">
+            <div class="h-100">
+                <h3 class="mb-4 pb-2" style="border-bottom: 3px solid var(--gradient);">
+                    Работы
+                    <span class="badge bg-secondary">{{ works_count }}</span>
+                </h3>
+
+                {% if favorite_works %}
+                <div class="row g-3">
+                    {% for work in favorite_works %}
+                    <div class="col-sm-6">
+                        <div class="card h-100 shadow-sm">
+                            <div class="position-relative">
+                                <img src="{{ work.image.url }}"
+                                     class="card-img-top"
+                                     alt="{{ work.title }}"
+                                     style="height: 200px; object-fit: cover; cursor: pointer;"
+                                     onclick="openImage('{{ work.image.url }}')">
+
+                                <!-- Кнопка ❤️ -->
+                                {% if user.is_authenticated %}
+                                <form method="post" action="{% url 'users:toggle_work_favorite' work.id %}"
+                                      style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            style="background: transparent; border: none; padding: 0; cursor: pointer; font-size: 2rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));"
+                                            title="Убрать из избранного">
+                                        ❤️
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title mb-1">{{ work.title }}</h6>
+                                <p class="card-text text-muted small mb-0">
+                                    {{ work.description|truncatewords:10 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5 bg-light rounded">
+                    <div class="display-4 mb-3">🖼️</div>
+                    <p class="text-muted mb-3">Нет сохранённых работ</p>
+                    <a href="{% url 'portfolio:list' %}" class="btn btn-outline-primary">
+                        Смотреть работы
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- КОЛОНКА 2: КУРСЫ -->
+        <div class="col-lg-6">
+            <div class="h-100">
+                <h3 class="mb-4 pb-2" style="border-bottom: 3px solid var(--gradient);">
+                    Курсы
+                    <span class="badge bg-secondary">{{ courses_count }}</span>
+                </h3>
+
+                {% if favorite_courses %}
+                <div class="row g-3">
+                    {% for course in favorite_courses %}
+                    <div class="col-sm-6">
+                        <div class="card h-100 shadow-sm">
+                            <div class="position-relative">
+                                <img src="{{ course.image.url }}"
+                                     class="card-img-top"
+                                     alt="{{ course.title }}"
+                                     style="height: 200px; object-fit: cover; cursor: pointer;"
+                                     onclick="openImage('{{ course.image.url }}')">
+
+                                <!-- Кнопка ❤️ -->
+                                {% if user.is_authenticated %}
+                                <form method="post" action="{% url 'users:toggle_course_favorite' course.id %}"
+                                      style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            style="background: transparent; border: none; padding: 0; cursor: pointer; font-size: 2rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));"
+                                            title="Убрать из избранного">
+                                        ❤️
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="card-title mb-1">{{ course.title }}</h6>
+                                <p class="card-text text-muted small flex-grow-1 mb-2">
+                                    {{ course.description|truncatewords:10 }}
+                                </p>
+                                <p class="fw-bold text-primary mb-2">{{ course.price }} ₽</p>
+                                <a href="{% url 'courses:detail' course.id %}" class="btn btn-primary btn-sm w-100">
+                                    Подробнее
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5 bg-light rounded">
+                    <div class="display-4 mb-3">📚</div>
+                    <p class="text-muted mb-3">Нет сохранённых курсов</p>
+                    <a href="{% url 'courses:list' %}" class="btn btn-outline-success">
+                        Смотреть курсы
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+    <!-- ПУСТО -->
+    <div class="text-center py-5">
+        <div class="display-1 mb-4">💔</div>
+        <h2 class="mb-3">Избранное пусто</h2>
+        <p class="text-muted mb-4">
+            Добавляйте понравившиеся работы и курсы, нажимая на ❤️
+        </p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{% url 'portfolio:list' %}" class="btn btn-primary btn-lg">
+                Смотреть работы
+            </a>
+            <a href="{% url 'courses:list' %}" class="btn btn-success btn-lg">
+                Смотреть курсы
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

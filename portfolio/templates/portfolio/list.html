@@ -5,15 +5,34 @@
 
 {% block content %}
 <div class="container py-5">
-    <h1 class="text-center mb-4">Мои работы</h1>
+    <h1 class="text-center mb-5 d-block">Мои работы</h1>
     <div class="row g-4">
         {% for work in works %}
         <div class="col-md-4 col-sm-6">
             <div class="card h-100 shadow-sm">
-                <img src="{{ work.image.url }}" class="card-img-top" alt="{{ work.title }}" style="height: 250px; object-fit: cover;">
+                <div class="position-relative">
+                    <img src="{{ work.image.url }}"
+                         class="card-img-top"
+                         alt="{{ work.title }}"
+                         style="height: 250px; object-fit: cover; cursor: pointer;"
+                         onclick="openImage('{{ work.image.url }}')">
+                    <!-- Кнопка ❤️ -->
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'users:toggle_work_favorite' work.id %}"
+                          style="position: absolute; top: 10px; right: 10px; z-index: 10;">
+                        {% csrf_token %}
+                        <button type="submit"
+                                style="background: transparent; border: none; padding: 0; cursor: pointer; font-size: 2rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));"
+                                title="{% if work.id in favorite_work_ids %}Убрать из избранного{% else %}В избранное{% endif %}">
+                            {% if work.id in favorite_work_ids %}❤️{% else %}🤍{% endif %}
+                        </button>
+                    </form>
+                    {% endif %}
+
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ work.title }}</h5>
-                    <p class="card-text">{{ work.description|truncatewords:15 }}</p>
+                    <p class="card-text text-muted">{{ work.description|truncatewords:15 }}</p>
                 </div>
             </div>
         </div>
@@ -24,4 +43,20 @@
         {% endfor %}
     </div>
 </div>
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ПРОСМОТРА ФОТО -->
+<div id="imageModal"
+     style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; cursor: pointer;"
+     onclick="closeImage()">
+
+    <img id="modalImage"
+         src=""
+         alt="Фото"
+         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 95%; max-height: 95%; border-radius: 10px; box-shadow: 0 0 60px rgba(255,255,255,0.3);">
+
+    <button onclick="closeImage()"
+            style="position: absolute; top: 20px; right: 30px; background: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        ✕
+    </button>
+</div>
+
 {% endblock %}

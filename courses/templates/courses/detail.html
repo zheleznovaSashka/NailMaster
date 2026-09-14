@@ -8,15 +8,34 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="card shadow">
-                <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}" style="height: 400px; object-fit: cover;">
+                <img src="{{ course.image.url }}"
+                     class="card-img-top"
+                     alt="{{ course.title }}"
+                     style="height: 400px; object-fit: cover; cursor: pointer;"
+                     onclick="openImage('{{ course.image.url }}')">
                 <div class="card-body p-4">
-                    <h1 class="card-title mb-3">{{ course.title }}</h1>
+                    <!-- Заголовок + кнопка ❤️ -->
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h1 class="card-title mb-0">{{ course.title }}</h1>
+
+                        {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'users:toggle_course_favorite' course.id %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    style="background: transparent; border: none; padding: 0; cursor: pointer; font-size: 2.5rem; line-height: 1; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));"
+                                    title="{% if is_favorite %}Убрать из избранного{% else %}В избранное{% endif %}">
+                                {% if is_favorite %}❤️{% else %}🤍{% endif %}
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
 
                     <div class="d-flex flex-wrap gap-3 mb-3 text-muted">
                         <span><i class="bi bi-clock"></i> {{ course.duration }}</span>
                     </div>
 
-                    <p class="fs-4 fw-bold mb-4" style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <p class="fs-4 fw-bold mb-4"
+                       style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                         {{ course.price }} ₽
                     </p>
 
@@ -26,40 +45,40 @@
 
                     <!-- ВИДЕО: показываем ТОЛЬКО если куплен -->
                     {% if has_access %}
-                        <div class="alert alert-success">
-                            <h5 class="mb-2">✅ Доступ открыт!</h5>
-                            <p class="mb-0">Вы купили этот курс. Приятного просмотра!</p>
-                        </div>
+                    <div class="alert alert-success">
+                        <h5 class="mb-2">✅ Доступ открыт!</h5>
+                        <p class="mb-0">Вы купили этот курс. Приятного просмотра!</p>
+                    </div>
 
-                        {% if course.video %}
-                            <h5 class="mt-4 mb-3">🎥 Видео-урок</h5>
-                            <video controls class="w-100 rounded" style="max-height: 500px;">
-                                <source src="{{ course.video.url }}" type="video/mp4">
-                                Ваш браузер не поддерживает видео
-                            </video>
-                        {% elif course.video_url %}
-                            <h5 class="mt-4 mb-3">🎥 Видео-урок</h5>
-                            <div class="ratio ratio-16x9">
-                                <iframe src="{{ course.video_url }}" allowfullscreen></iframe>
-                            </div>
-                        {% else %}
-                            <div class="alert alert-info">
-                                <p class="mb-0">
-                                    📩 Мастер отправит вам ссылку на видео в Telegram или MAX после подтверждения оплаты.
-                                </p>
-                            </div>
-                        {% endif %}
+                    {% if course.video %}
+                    <h5 class="mt-4 mb-3">🎥 Видео-урок</h5>
+                    <video controls class="w-100 rounded" style="max-height: 500px;">
+                        <source src="{{ course.video.url }}" type="video/mp4">
+                        Ваш браузер не поддерживает видео
+                    </video>
+                    {% elif course.video_url %}
+                    <h5 class="mt-4 mb-3">🎥 Видео-урок</h5>
+                    <div class="ratio ratio-16x9">
+                        <iframe src="{{ course.video_url }}" allowfullscreen></iframe>
+                    </div>
                     {% else %}
-                        <!-- ВИДЕО СКРЫТО -->
-                        <div class="alert alert-warning">
-                            <h5 class="mb-2">🔒 Видео доступно после оплаты</h5>
-                            <p class="mb-3">
-                                Чтобы получить доступ к курсу, оформите покупку и свяжитесь с мастером для оплаты.
-                            </p>
-                            <p class="mb-0 small">
-                                📩 После оплаты мастер отправит вам доступ к видео.
-                            </p>
-                        </div>
+                    <div class="alert alert-info">
+                        <p class="mb-0">
+                            📩 Мастер отправит вам ссылку на видео в Telegram или MAX после подтверждения оплаты.
+                        </p>
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <!-- ВИДЕО СКРЫТО -->
+                    <div class="alert alert-warning">
+                        <h5 class="mb-2">🔒 Видео доступно после оплаты</h5>
+                        <p class="mb-3">
+                            Чтобы получить доступ к курсу, оформите покупку и свяжитесь с мастером для оплаты.
+                        </p>
+                        <p class="mb-0 small">
+                            📩 После оплаты мастер отправит вам доступ к видео.
+                        </p>
+                    </div>
                     {% endif %}
 
                     <hr class="my-4">
@@ -71,22 +90,23 @@
                         </a>
 
                         {% if has_access %}
-                            <a href="{% url 'orders:list' %}" class="btn btn-success">
-                                📦 Мои заказы
-                            </a>
+                        <a href="{% url 'orders:list' %}" class="btn btn-success">
+                            📦 Мои заказы
+                        </a>
                         {% else %}
-                            {% if user.is_authenticated %}
-                                <a href="{% url 'cart:add' course.id %}" class="btn btn-primary btn-lg">
-                                    🛒 Купить курс
-                                </a>
-                                <a href="{% url 'cart:view' %}" class="btn btn-outline-primary btn-lg">
-                                    <i class="bi bi-cart"></i> В корзину
-                                </a>
-                            {% else %}
-                                <a href="{% url 'login' %}?next={% url 'courses:detail' course.pk %}" class="btn btn-primary btn-lg">
-                                    🔐 Войдите, чтобы купить
-                                </a>
-                            {% endif %}
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'cart:add' course.id %}" class="btn btn-primary btn-lg">
+                            🛒 Купить курс
+                        </a>
+                        <a href="{% url 'cart:view' %}" class="btn btn-outline-primary btn-lg">
+                            <i class="bi bi-cart"></i> В корзину
+                        </a>
+                        {% else %}
+                        <a href="{% url 'login' %}?next={% url 'courses:detail' course.pk %}"
+                           class="btn btn-primary btn-lg">
+                            🔐 Войдите, чтобы купить
+                        </a>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>

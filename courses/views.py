@@ -1,12 +1,28 @@
 ﻿from django.shortcuts import render, get_object_or_404
 from .models import Course
 from orders.models import Order
+from users.models import Favorite
 
 
 def course_list(request):
     """Список курсов"""
     courses = Course.objects.all()
-    return render(request, 'courses/list.html', {'courses': courses})
+
+    # IDs курсов в избранном
+    favorite_course_ids = []
+    if request.user.is_authenticated:
+        favorite_course_ids = list(
+            Favorite.objects.filter(
+                user=request.user,
+                course__isnull=False
+            ).values_list('course_id', flat=True)
+        )
+
+    context = {
+        'courses': courses,
+        'favorite_course_ids': favorite_course_ids,
+    }
+    return render(request, 'courses/list.html', context)
 
 
 def course_detail(request, pk):
@@ -22,9 +38,18 @@ def course_detail(request, pk):
             status__in=['paid', 'completed']
         ).exists()
 
+    # Проверяем, в избранном ли
+    is_favorite = False
+    if request.user.is_authenticated:
+        is_favorite = Favorite.objects.filter(
+            user=request.user,
+            course=course
+        ).exists()
+
     context = {
         'course': course,
         'has_access': has_access,
+        'is_favorite': is_favorite,
     }
     return render(request, 'courses/detail.html', context)
 
