@@ -125,6 +125,13 @@
                         </a>
                         {% endif %}
                     </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{% url 'dashboard:stats' %}" class="text-decoration-none">
+                            📊 <strong>Статистика</strong>
+                        </a>
+                        <span class="text-muted">📈</span>
+                    </div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <a href="{% url 'dashboard:master_edit' %}" class="text-decoration-none">
                             👤 Информация о мастере
@@ -227,6 +234,13 @@
             </div>
             {% endfor %}
         </div>
+    </div>
+    <hr>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{% url 'dashboard:stats' %}" class="text-decoration-none">
+            📊 <strong>Расширенная статистика</strong>
+        </a>
+        <span class="text-muted">📈</span>
     </div>
     {% endif %}
 </div>

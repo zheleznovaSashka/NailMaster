@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item active">Статистика</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">📊 Расширенная статистика</h1>
+
+    <!-- Верхние карточки -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white;">
+                <div class="card-body">
+                    <h6 class="text-white-50 mb-1">Общий доход</h6>
+                    <h2 class="mb-0">{{ total_stats.total_income|floatformat:0 }} ₽</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #00b894, #55efc4); color: white;">
+                <div class="card-body">
+                    <h6 class="text-white-50 mb-1">Средний чек</h6>
+                    <h2 class="mb-0">{{ total_stats.avg_order|floatformat:0 }} ₽</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #fdcb6e, #f39c12); color: white;">
+                <div class="card-body">
+                    <h6 class="text-white-50 mb-1">Заказов за месяц</h6>
+                    <h2 class="mb-0">{{ total_stats.orders_month }}</h2>
+                    <small class="text-white-50">всего: {{ total_stats.total_orders }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #fd79a8, #e84393); color: white;">
+                <div class="card-body">
+                    <h6 class="text-white-50 mb-1">Новых пользователей</h6>
+                    <h2 class="mb-0">{{ total_stats.new_users_month }}</h2>
+                    <small class="text-white-50">всего: {{ total_stats.total_users }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Графики -->
+    <div class="row g-4 mb-4">
+        <!-- График дохода за 30 дней -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">📈 Доход за 30 дней</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="incomeChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Статусы заказов -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">📊 Статусы заказов</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="statusChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <!-- Рейтинг отзывов -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">⭐ Рейтинг отзывов</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="ratingChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Доход по месяцам -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">📅 Доход по месяцам</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Топ курсов и клиентов -->
+    <div class="row g-4">
+        <!-- Топ курсов -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">🏆 Топ курсов</h5>
+                </div>
+                <div class="card-body">
+                    {% if top_courses %}
+                        {% for course in top_courses %}
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="badge bg-primary me-3" style="font-size: 1rem; padding: 10px 15px;">
+                                {{ forloop.counter }}
+                            </div>
+                            {% if course.image %}
+                                <img src="{{ course.image.url }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" class="me-3">
+                            {% endif %}
+                            <div class="flex-grow-1">
+                                <strong>{{ course.title }}</strong>
+                                <br>
+                                <small class="text-muted">{{ course.orders_count }} заказов • {{ course.price }} ₽</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center py-3">Пока нет продаж курсов</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Топ клиентов -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">👑 Топ клиентов</h5>
+                </div>
+                <div class="card-body">
+                    {% if top_clients %}
+                        {% for client in top_clients %}
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="badge bg-warning text-dark me-3" style="font-size: 1rem; padding: 10px 15px;">
+                                {{ forloop.counter }}
+                            </div>
+                            <div class="rounded-circle me-3 d-flex align-items-center justify-content-center text-white"
+                                 style="width: 50px; height: 50px; background: var(--gradient); font-weight: 700;">
+                                {{ client.username|first|upper }}
+                            </div>
+                            <div class="flex-grow-1">
+                                <strong>{{ client.username }}</strong>
+                                <br>
+                                <small class="text-muted">{{ client.orders_count }} заказов • {{ client.total_spent|floatformat:0|default:"0" }} ₽</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted text-center py-3">Пока нет клиентов с заказами</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+// График дохода
+const incomeCtx = document.getElementById('incomeChart');
+new Chart(incomeCtx, {
+    type: 'line',
+    data: {
+        labels: {{ chart_labels|safe }},
+        datasets: [{
+            label: 'Доход (₽)',
+            data: {{ chart_income|safe }},
+            borderColor: '#6c5ce7',
+            backgroundColor: 'rgba(108, 92, 231, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#6c5ce7',
+            pointRadius: 4,
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + ' ₽';
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Статусы заказов (круговая)
+const statusCtx = document.getElementById('statusChart');
+new Chart(statusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['⏳ Ожидают', '💳 Оплачены', '✅ Завершены', '❌ Отменены'],
+        datasets: [{
+            data: [
+                {{ status_data.pending }},
+                {{ status_data.paid }},
+                {{ status_data.completed }},
+                {{ status_data.cancelled }}
+            ],
+            backgroundColor: ['#fdcb6e', '#74b9ff', '#00b894', '#e17055'],
+            borderWidth: 2,
+            borderColor: '#fff'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Рейтинг отзывов (столбцы)
+const ratingCtx = document.getElementById('ratingChart');
+new Chart(ratingCtx, {
+    type: 'bar',
+    data: {
+        labels: ['⭐ 1', '⭐ 2', '⭐ 3', '⭐ 4', '⭐ 5'],
+        datasets: [{
+            label: 'Количество отзывов',
+            data: [
+                {{ rating_data.1 }},
+                {{ rating_data.2 }},
+                {{ rating_data.3 }},
+                {{ rating_data.4 }},
+                {{ rating_data.5 }}
+            ],
+            backgroundColor: [
+                '#e17055',
+                '#fab1a0',
+                '#fdcb6e',
+                '#74b9ff',
+                '#00b894'
+            ],
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: { stepSize: 1 }
+            }
+        }
+    }
+});
+
+// Доход по месяцам
+const monthlyCtx = document.getElementById('monthlyChart');
+new Chart(monthlyCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ month_labels|safe }},
+        datasets: [{
+            label: 'Доход (₽)',
+            data: {{ month_income|safe }},
+            backgroundColor: 'rgba(108, 92, 231, 0.7)',
+            borderColor: '#6c5ce7',
+            borderWidth: 2,
+            borderRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + ' ₽';
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

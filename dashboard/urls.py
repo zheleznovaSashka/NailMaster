@@ -50,4 +50,7 @@ urlpatterns = [
     path('orders/<int:pk>/status/<str:status>/', views.order_change_status, name='order_change_status'),
     path('orders/<int:pk>/delete/', views.order_delete, name='order_delete'),
 
+    # Статистика
+    path('stats/', views.stats_view, name='stats'),
+
 ]

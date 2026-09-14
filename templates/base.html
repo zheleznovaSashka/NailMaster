@@ -18,55 +18,55 @@
 <div class="page-loader" id="pageLoader"></div>
 
 <script>
-// Кнопка "Наверх"
-window.addEventListener('scroll', function() {
-    const btn = document.getElementById('scrollToTop');
-    if (window.scrollY > 300) {
-        btn.classList.add('show');
-    } else {
-        btn.classList.remove('show');
+    // Кнопка "Наверх"
+    window.addEventListener('scroll', function() {
+        const btn = document.getElementById('scrollToTop');
+        if (window.scrollY > 300) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    });
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
-});
 
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// Анимация появления при скролле
-document.addEventListener('DOMContentLoaded', function() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+    // Анимация появления при скролле
+    document.addEventListener('DOMContentLoaded', function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
 
-    document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right').forEach(el => {
-        observer.observe(el);
-    });
-});
-
-// Индикатор загрузки при переходах
-document.addEventListener('DOMContentLoaded', function() {
-    const loader = document.getElementById('pageLoader');
-
-    // Показываем при клике на ссылки
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && !href.startsWith('#') && !href.startsWith('mailto:') && !href.startsWith('tel:') && this.target !== '_blank') {
-                loader.classList.add('active');
-            }
+        document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right').forEach(el => {
+            observer.observe(el);
         });
     });
-});
+
+    // Индикатор загрузки при переходах
+    document.addEventListener('DOMContentLoaded', function() {
+        const loader = document.getElementById('pageLoader');
+
+        // Показываем при клике на ссылки
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('mailto:') && !href.startsWith('tel:') && this.target !== '_blank') {
+                    loader.classList.add('active');
+                }
+            });
+        });
+    });
 </script>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
@@ -144,11 +144,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <footer class="bg-dark text-white text-center py-4 mt-5">
     <div class="container">
+        <p class="mb-2">
+            <a href="/pages/privacy/" class="text-white-50 text-decoration-none me-3">Политика конфиденциальности</a>
+            <a href="/pages/offer/" class="text-white-50 text-decoration-none">Публичная оферта</a>
+        </p>
         <p class="mb-2">© 2026 Nail Master. Все права защищены.</p>
         <p class="mb-0">
-            <a href="#" class="text-white-50 text-decoration-none me-3"><i class="bi bi-instagram fs-4"></i></a>
-            <a href="#" class="text-white-50 text-decoration-none me-3"><i class="bi bi-telegram fs-4"></i></a>
-            <a href="#" class="text-white-50 text-decoration-none"><i class="bi bi-chat-dots fs-4"></i></a>
+            {% if global_contact %}
+            {% if global_contact.telegram %}
+            <a href="{{ global_contact.telegram }}" target="_blank" class="text-white-50 text-decoration-none me-3">
+                <i class="bi bi-telegram fs-4"></i>
+            </a>
+            {% endif %}
+            {% if global_contact.max_messenger %}
+            <a href="{{ global_contact.max_messenger }}" target="_blank" class="text-white-50 text-decoration-none">
+                <i class="bi bi-chat-dots fs-4"></i>
+            </a>
+            {% endif %}
+            {% endif %}
         </p>
     </div>
 </footer>

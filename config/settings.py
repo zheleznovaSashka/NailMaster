@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Сторонние
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+
     # Мои приложения
     'users',
     'cart',
@@ -60,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -77,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
+                'contacts.context_processors.contact_info',
             ],
         },
     },
@@ -170,3 +176,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Почта мастера для уведомлений
 MASTER_EMAIL = 'alex20sent01love@gmail.com'  # Куда отправлять уведомления
+
+SITE_ID = 1

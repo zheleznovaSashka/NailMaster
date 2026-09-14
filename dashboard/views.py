@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.db.models import Sum, Q, Count
+from django.db.models import Sum, Q, Avg, Count
 from django.utils import timezone
 from datetime import timedelta
 from django.shortcuts import render, redirect, get_object_or_404
@@ -13,6 +13,9 @@ from portfolio.models import Work
 from courses.models import Course
 from core.models import MasterInfo
 from contacts.models import ContactInfo
+from datetime import datetime, timedelta
+from django.db.models.functions import TruncDate, TruncMonth
+
 
 
 def is_staff(user):
@@ -452,7 +455,6 @@ def contacts_edit(request):
     if request.method == 'POST':
         contact.phone = request.POST.get('phone', contact.phone)
         contact.email = request.POST.get('email', contact.email)
-        contact.instagram = request.POST.get('instagram', '')
         contact.telegram = request.POST.get('telegram', '')
         contact.max_messenger = request.POST.get('max_messenger', '')
         contact.booking_url = request.POST.get('booking_url', '')
@@ -673,3 +675,135 @@ def order_delete(request, pk):
         return redirect('dashboard:orders_list')
 
     return render(request, 'dashboard/order_delete.html', {'order': order})
+
+
+
+
+@login_required
+@user_passes_test(is_staff, login_url='/')
+def stats_view(request):
+    """Расширенная статистика"""
+
+    # === ДОХОД ЗА 30 ДНЕЙ ===
+    today = timezone.now().date()
+    thirty_days_ago = today - timedelta(days=30)
+
+    # Группировка по дням
+    daily_income = Order.objects.filter(
+        created_at__date__gte=thirty_days_ago,
+        status__in=['paid', 'completed']
+    ).annotate(
+        date=TruncDate('created_at')
+    ).values('date').annotate(
+        total=Sum('total_price'),
+        count=Count('id')
+    ).order_by('date')
+
+    # Заполняем пропущенные дни
+    days_data = {}
+    for i in range(31):
+        d = thirty_days_ago + timedelta(days=i)
+        days_data[d] = {'total': 0, 'count': 0}
+
+    for item in daily_income:
+        days_data[item['date']] = {
+            'total': float(item['total'] or 0),
+            'count': item['count']
+        }
+
+    # Данные для графика
+    chart_labels = [d.strftime('%d.%m') for d in days_data.keys()]
+    chart_income = [data['total'] for data in days_data.values()]
+    chart_orders = [data['count'] for data in days_data.values()]
+
+    # === СТАТУСЫ ЗАКАЗОВ ===
+    status_stats = Order.objects.values('status').annotate(
+        count=Count('id')
+    )
+
+    status_data = {
+        'pending': 0,
+        'paid': 0,
+        'completed': 0,
+        'cancelled': 0,
+    }
+    for s in status_stats:
+        status_data[s['status']] = s['count']
+
+    # === ТОП КУРСОВ ===
+    top_courses = Course.objects.annotate(
+        orders_count=Count('order')
+    ).filter(orders_count__gt=0).order_by('-orders_count')[:5]
+
+    # === ТОП КЛИЕНТОВ ===
+    top_clients = CustomUser.objects.annotate(
+        orders_count=Count('order'),
+        total_spent=Sum('order__total_price',
+                        filter=Q(order__status__in=['paid', 'completed']))
+    ).filter(orders_count__gt=0).order_by('-total_spent')[:5]
+
+    # === РЕЙТИНГ ОТЗЫВОВ ===
+    rating_stats = Review.objects.values('rating').annotate(
+        count=Count('id')
+    ).order_by('rating')
+
+    rating_data = {i: 0 for i in range(1, 6)}
+    for r in rating_stats:
+        rating_data[r['rating']] = r['count']
+
+    # === СРЕДНИЙ ЧЕК ===
+    avg_order = Order.objects.filter(
+        status__in=['paid', 'completed']
+    ).aggregate(avg=Avg('total_price'))['avg'] or 0
+
+    # === ОБЩАЯ СТАТИСТИКА ===
+    total_stats = {
+        'total_users': CustomUser.objects.count(),
+        'new_users_month': CustomUser.objects.filter(
+            date_joined__gte=timezone.now() - timedelta(days=30)
+        ).count(),
+        'total_orders': Order.objects.count(),
+        'orders_month': Order.objects.filter(
+            created_at__gte=timezone.now() - timedelta(days=30)
+        ).count(),
+        'total_income': Order.objects.filter(
+            status__in=['paid', 'completed']
+        ).aggregate(total=Sum('total_price'))['total'] or 0,
+        'avg_order': avg_order,
+    }
+
+    # === СТАТИСТИКА ПО МЕСЯЦАМ (последние 6 месяцев) ===
+    six_months_ago = timezone.now() - timedelta(days=180)
+    monthly_income = Order.objects.filter(
+        created_at__gte=six_months_ago,
+        status__in=['paid', 'completed']
+    ).annotate(
+        month=TruncMonth('created_at')
+    ).values('month').annotate(
+        total=Sum('total_price'),
+        count=Count('id')
+    ).order_by('month')
+
+    month_labels = []
+    month_income = []
+    month_orders = []
+
+    for item in monthly_income:
+        month_labels.append(item['month'].strftime('%m.%Y'))
+        month_income.append(float(item['total'] or 0))
+        month_orders.append(item['count'])
+
+    context = {
+        'total_stats': total_stats,
+        'chart_labels': chart_labels,
+        'chart_income': chart_income,
+        'chart_orders': chart_orders,
+        'status_data': status_data,
+        'top_courses': top_courses,
+        'top_clients': top_clients,
+        'rating_data': rating_data,
+        'month_labels': month_labels,
+        'month_income': month_income,
+        'month_orders': month_orders,
+    }
+    return render(request, 'dashboard/stats.html', context)
