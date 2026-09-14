@@ -9,29 +9,85 @@
         <div class="col-lg-8 mx-auto">
             <div class="card shadow">
                 <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}" style="height: 400px; object-fit: cover;">
-                <div class="card-body">
-                    <h1 class="card-title">{{ course.title }}</h1>
-                    <p class="text-muted"><i class="bi bi-clock"></i> {{ course.duration }}</p>
-                    <p class="fs-4 fw-bold text-primary">{{ course.price }} ₽</p>
-                    <p class="card-text">{{ course.description }}</p>
-                    
-                    {% if course.video %}
-                        <h5 class="mt-4">Видео-урок</h5>
-                        <video controls class="w-100" style="max-height: 500px;">
-                            <source src="{{ course.video.url }}" type="video/mp4">
-                            Ваш браузер не поддерживает видео
-                        </video>
-                    {% elif course.video_url %}
-                        <h5 class="mt-4">Видео-урок</h5>
-                        <div class="ratio ratio-16x9">
-                            <iframe src="{{ course.video_url }}" allowfullscreen></iframe>
+                <div class="card-body p-4">
+                    <h1 class="card-title mb-3">{{ course.title }}</h1>
+
+                    <div class="d-flex flex-wrap gap-3 mb-3 text-muted">
+                        <span><i class="bi bi-clock"></i> {{ course.duration }}</span>
+                    </div>
+
+                    <p class="fs-4 fw-bold mb-4" style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        {{ course.price }} ₽
+                    </p>
+
+                    <p class="card-text fs-5">{{ course.description }}</p>
+
+                    <hr class="my-4">
+
+                    <!-- ВИДЕО: показываем ТОЛЬКО если куплен -->
+                    {% if has_access %}
+                        <div class="alert alert-success">
+                            <h5 class="mb-2">✅ Доступ открыт!</h5>
+                            <p class="mb-0">Вы купили этот курс. Приятного просмотра!</p>
+                        </div>
+
+                        {% if course.video %}
+                            <h5 class="mt-4 mb-3">🎥 Видео-урок</h5>
+                            <video controls class="w-100 rounded" style="max-height: 500px;">
+                                <source src="{{ course.video.url }}" type="video/mp4">
+                                Ваш браузер не поддерживает видео
+                            </video>
+                        {% elif course.video_url %}
+                            <h5 class="mt-4 mb-3">🎥 Видео-урок</h5>
+                            <div class="ratio ratio-16x9">
+                                <iframe src="{{ course.video_url }}" allowfullscreen></iframe>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                <p class="mb-0">
+                                    📩 Мастер отправит вам ссылку на видео в Telegram или MAX после подтверждения оплаты.
+                                </p>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <!-- ВИДЕО СКРЫТО -->
+                        <div class="alert alert-warning">
+                            <h5 class="mb-2">🔒 Видео доступно после оплаты</h5>
+                            <p class="mb-3">
+                                Чтобы получить доступ к курсу, оформите покупку и свяжитесь с мастером для оплаты.
+                            </p>
+                            <p class="mb-0 small">
+                                📩 После оплаты мастер отправит вам доступ к видео.
+                            </p>
                         </div>
                     {% endif %}
-                    
-                    <div class="mt-4 d-flex gap-2 flex-wrap">
-                        <a href="{% url 'courses:list' %}" class="btn btn-outline-secondary">← Назад</a>
-                        <a href="{% url 'cart:add' course.id %}" class="btn btn-success w-100 mt-2">Добавить в корзину</a>
-                        <button class="btn btn-primary" onclick="alert('Функция покупки будет доступна позже!')">Купить курс</button>
+
+                    <hr class="my-4">
+
+                    <!-- КНОПКИ -->
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="{% url 'courses:list' %}" class="btn btn-outline-secondary">
+                            ← Назад к курсам
+                        </a>
+
+                        {% if has_access %}
+                            <a href="{% url 'orders:list' %}" class="btn btn-success">
+                                📦 Мои заказы
+                            </a>
+                        {% else %}
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'cart:add' course.id %}" class="btn btn-primary btn-lg">
+                                    🛒 Купить курс
+                                </a>
+                                <a href="{% url 'cart:view' %}" class="btn btn-outline-primary btn-lg">
+                                    <i class="bi bi-cart"></i> В корзину
+                                </a>
+                            {% else %}
+                                <a href="{% url 'login' %}?next={% url 'courses:detail' course.pk %}" class="btn btn-primary btn-lg">
+                                    🔐 Войдите, чтобы купить
+                                </a>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

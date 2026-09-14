@@ -1,10 +1,9 @@
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Sum, Q, Avg, Count
 from django.utils import timezone
-from datetime import timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.http import Http404
 
 from users.models import CustomUser
 from orders.models import Order
@@ -15,7 +14,6 @@ from core.models import MasterInfo
 from contacts.models import ContactInfo
 from datetime import datetime, timedelta
 from django.db.models.functions import TruncDate, TruncMonth
-
 
 
 def is_staff(user):
@@ -628,8 +626,12 @@ def orders_list(request):
 @login_required
 @user_passes_test(is_staff, login_url='/')
 def order_detail_dashboard(request, pk):
-    """Детали заказа"""
-    order = get_object_or_404(Order, pk=pk)
+    """Детали заказа (для мастера)"""
+    try:
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        return render(request, 'dashboard/order_not_found.html', {'order_id': pk}, status=404)
+
     return render(request, 'dashboard/order_detail.html', {'order': order})
 
 
@@ -637,7 +639,11 @@ def order_detail_dashboard(request, pk):
 @user_passes_test(is_staff, login_url='/')
 def order_change_status(request, pk, status):
     """Изменение статуса заказа"""
-    order = get_object_or_404(Order, pk=pk)
+    try:
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        messages.error(request, f'❌ Заказ #{pk} не найден')
+        return redirect('dashboard:orders_list')
 
     valid_statuses = ['pending', 'paid', 'completed', 'cancelled']
     if status not in valid_statuses:
@@ -646,6 +652,7 @@ def order_change_status(request, pk, status):
 
     order.status = status
     order.save()
+
 
     status_names = {
         'pending': '⏳ Ожидает оплаты',
@@ -666,7 +673,11 @@ def order_change_status(request, pk, status):
 @user_passes_test(is_staff, login_url='/')
 def order_delete(request, pk):
     """Удаление заказа"""
-    order = get_object_or_404(Order, pk=pk)
+    try:
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        messages.error(request, f'❌ Заказ #{pk} не найден или уже удалён')
+        return redirect('dashboard:orders_list')
 
     if request.method == 'POST':
         order_id = order.id
@@ -675,8 +686,6 @@ def order_delete(request, pk):
         return redirect('dashboard:orders_list')
 
     return render(request, 'dashboard/order_delete.html', {'order': order})
-
-
 
 
 @login_required
@@ -807,3 +816,8 @@ def stats_view(request):
         'month_orders': month_orders,
     }
     return render(request, 'dashboard/stats.html', context)
+
+
+def order_not_found(request, pk=None):
+    """Страница 'Заказ не найден'"""
+    return render(request, 'dashboard/order_not_found.html', {'order_id': pk}, status=404)

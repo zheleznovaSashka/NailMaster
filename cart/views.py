@@ -58,6 +58,11 @@ def clear_cart(request):
     messages.success(request, 'Корзина очищена')
     return redirect('cart:view')
 
+def clear_session_cart(request):
+    """Очистка корзины в сессии"""
+    request.session['cart'] = {}
+    request.session.modified = True
+    return redirect('home')
 
 def checkout(request):
     """Оформление заказа"""
@@ -92,17 +97,22 @@ def checkout(request):
     courses_list = '\n'.join([f'  • {c.title} - {c.price} ₽' for c in cart_items])
     send_notification(
         subject=f'💰 Новый заказ #{order.id}',
-        message=f'Поступил новый заказ!\n\n'
+        message=f'🎉 Поступил новый заказ!\n\n'
                 f'📦 Заказ: #{order.id}\n'
                 f'👤 Клиент: {request.user.username}\n'
                 f'📧 Email: {request.user.email}\n'
                 f'💰 Сумма: {total_price} ₽\n\n'
                 f'📚 Курсы:\n{courses_list}\n\n'
-                f'Проверить: http://127.0.0.1:8000/admin/orders/order/'
+                f'⚠️ Клиент свяжется с вами для оплаты.\n'
+                f'После получения оплаты зайдите в панель управления и нажмите "💳 Оплачен".\n\n'
+                f'👉 Открыть заказ: http://127.0.0.1:8000/dashboard/orders/{order.id}/'
     )
 
     # Очищаем корзину
     request.session['cart'] = {}
 
-    messages.success(request, f'✅ Заказ #{order.id} оформлен! Сумма: {total_price} ₽')
-    return redirect('orders:list')
+
+    messages.success(request, f'✅ Заказ #{order.id} оформлен! Свяжитесь со мной для оплаты.')
+    return redirect('orders:detail', pk=order.id)
+
+

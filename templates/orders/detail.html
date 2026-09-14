@@ -20,6 +20,7 @@
                     <span class="badge bg-danger fs-6">❌ Отменен</span>
                     {% endif %}
                 </div>
+
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-6">
@@ -36,7 +37,6 @@
 
                     <hr>
 
-                    <h5 class="mb-3">Курсы в заказе:</h5>
                     {% for course in order.courses.all %}
                     <div class="card mb-3">
                         <div class="row g-0 align-items-center">
@@ -50,8 +50,15 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ course.title }}</h5>
                                     <p class="card-text text-muted">{{ course.description|truncatewords:15 }}</p>
-                                    <p class="fw-bold mb-0" style="color: var(--primary-color);">{{ course.price }}
+                                    <p class="fw-bold mb-2" style="color: var(--primary-color);">{{ course.price }}
                                         ₽</p>
+
+                                    <!-- НОВОЕ: кнопка "Смотреть курс" для оплаченных заказов -->
+                                    {% if order.status == 'paid' or order.status == 'completed' %}
+                                    <a href="{% url 'courses:detail' course.id %}" class="btn btn-success btn-sm">
+                                        ▶️ Смотреть курс
+                                    </a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -73,14 +80,41 @@
                             ← Мои заказы
                         </a>
                         {% if order.status == 'pending' %}
-                        <button class="btn btn-success" onclick="alert('Оплата будет доступна позже!')">
-                            💳 Оплатить
-                        </button>
                         <a href="{% url 'orders:cancel' order.id %}" class="btn btn-outline-danger">
                             ❌ Отменить заказ
                         </a>
                         {% endif %}
                     </div>
+
+                    {% if order.status == 'pending' %}
+                    <hr class="my-4">
+                    <div class="alert alert-info">
+                        <h5 class="mb-3">💳 Для оплаты свяжитесь со мной</h5>
+                        <p class="mb-3">
+                            Ваш заказ <strong>#{{ order.id }}</strong> на сумму <strong>{{ order.total_price }}
+                            ₽</strong> оформлен.
+                            Для завершения покупки напишите мне в удобном мессенджере — я пришлю реквизиты для оплаты.
+                        </p>
+
+                        <div class="d-flex gap-2 flex-wrap">
+                            {% if global_contact.telegram %}
+                            <a href="{{ global_contact.telegram }}" target="_blank" class="btn btn-primary btn-lg">
+                                <i class="bi bi-telegram"></i> Написать в Telegram
+                            </a>
+                            {% endif %}
+
+                            {% if global_contact.max_messenger %}
+                            <a href="{{ global_contact.max_messenger }}" target="_blank" class="btn btn-info btn-lg">
+                                <i class="bi bi-chat-dots"></i> Написать в MAX
+                            </a>
+                            {% endif %}
+                        </div>
+
+                        <p class="mt-3 mb-0 small text-muted">
+                            Не забудьте указать номер заказа <strong>#{{ order.id }}</strong> при обращении.
+                        </p>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

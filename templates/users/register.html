@@ -4,6 +4,7 @@
 {% block title %}Регистрация{% endblock %}
 
 {% block content %}
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-6">
@@ -14,6 +15,12 @@
                 <div class="card-body p-4">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
+
+
+                        <!-- Ловушки для автозаполнения браузера -->
+                        <input type="text" style="display: none;" autocomplete="username" tabindex="-1">
+                        <input type="password" style="display: none;" autocomplete="current-password" tabindex="-1">
+
 
                         {% if form.errors %}
                         <div class="alert alert-danger">

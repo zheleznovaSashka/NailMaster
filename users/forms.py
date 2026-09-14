@@ -4,6 +4,19 @@ from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
+    username = forms.CharField(
+        required=True,
+        label='Имя пользователя',
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Придумайте имя пользователя',
+            'autocomplete': 'off',
+            'autocapitalize': 'off',
+            'autocorrect': 'off',
+            'spellcheck': 'false',
+        })
+    )
     email = forms.EmailField(
         required=True,
         label='Email',

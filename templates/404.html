@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Страница не найдена{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="display-1 mb-3">🔍</div>
+            <h1 class="display-4 fw-bold mb-3">404</h1>
+            <h3 class="mb-3">Страница не найдена</h3>
+            <p class="text-muted mb-4">
+                К сожалению, такой страницы не существует или она была удалена.
+            </p>
+
+            <div class="d-flex gap-2 justify-content-center flex-wrap">
+                <a href="/" class="btn btn-primary btn-lg">
+                    🏠 На главную
+                </a>
+                <a href="{% url 'courses:list' %}" class="btn btn-outline-secondary btn-lg">
+                    📚 Все курсы
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

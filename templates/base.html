@@ -87,10 +87,10 @@
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="{% url 'cart:view' %}">
                         <i class="bi bi-cart"></i>
-                        {% if cart_total_items > 0 %}
+                        {% if cart_total_items > 0 and not user.is_staff and not user.is_superuser %}
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ cart_total_items }}
-                                </span>
+                {{ cart_total_items }}
+            </span>
                         {% endif %}
                     </a>
                 </li>
@@ -157,26 +157,28 @@
         <!-- Соцсети и контакты -->
         <p class="mb-3">
             {% if global_contact %}
-                {% if global_contact.telegram %}
-                    <a href="{{ global_contact.telegram }}" target="_blank" class="text-white-50 text-decoration-none me-3" title="Telegram">
-                        <i class="bi bi-telegram fs-4"></i>
-                    </a>
-                {% endif %}
-                {% if global_contact.max_messenger %}
-                    <a href="{{ global_contact.max_messenger }}" target="_blank" class="text-white-50 text-decoration-none me-3" title="MAX">
-                        <i class="bi bi-chat-dots fs-4"></i>
-                    </a>
-                {% endif %}
-                {% if global_contact.phone %}
-                    <a href="tel:{{ global_contact.phone }}" class="text-white-50 text-decoration-none me-3" title="Позвонить">
-                        <i class="bi bi-telephone fs-4"></i>
-                    </a>
-                {% endif %}
-                {% if global_contact.email %}
-                    <a href="mailto:{{ global_contact.email }}" class="text-white-50 text-decoration-none" title="Email">
-                        <i class="bi bi-envelope fs-4"></i>
-                    </a>
-                {% endif %}
+            {% if global_contact.telegram %}
+            <a href="{{ global_contact.telegram }}" target="_blank" class="text-white-50 text-decoration-none me-3"
+               title="Telegram">
+                <i class="bi bi-telegram fs-4"></i>
+            </a>
+            {% endif %}
+            {% if global_contact.max_messenger %}
+            <a href="{{ global_contact.max_messenger }}" target="_blank" class="text-white-50 text-decoration-none me-3"
+               title="MAX">
+                <i class="bi bi-chat-dots fs-4"></i>
+            </a>
+            {% endif %}
+            {% if global_contact.phone %}
+            <a href="tel:{{ global_contact.phone }}" class="text-white-50 text-decoration-none me-3" title="Позвонить">
+                <i class="bi bi-telephone fs-4"></i>
+            </a>
+            {% endif %}
+            {% if global_contact.email %}
+            <a href="mailto:{{ global_contact.email }}" class="text-white-50 text-decoration-none" title="Email">
+                <i class="bi bi-envelope fs-4"></i>
+            </a>
+            {% endif %}
             {% endif %}
         </p>
 

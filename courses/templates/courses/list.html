@@ -11,19 +11,28 @@
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 {% if course.image %}
-                    <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}" style="height: 200px; object-fit: cover;">
+                <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.title }}"
+                     style="height: 200px; object-fit: cover;">
                 {% else %}
-                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <span class="text-muted">Нет фото</span>
-                    </div>
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center"
+                     style="height: 200px;">
+                    <span class="text-muted">Нет фото</span>
+                </div>
                 {% endif %}
-                <div class="card-body">
+                <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ course.title }}</h5>
                     <p class="card-text">{{ course.description|truncatewords:15 }}</p>
                     <p class="fw-bold text-primary">{{ course.price }} ₽</p>
                     <p class="text-muted small"><i class="bi bi-clock"></i> {{ course.duration }}</p>
-                    <a href="{% url 'cart:add' course.id %}" class="btn btn-success w-100 mt-2">В корзину</a>
-                    <a href="/courses/{{ course.id }}/" class="btn btn-primary w-100">Подробнее</a>
+
+                    <div class="d-grid gap-2 mt-auto">
+                        <a href="{% url 'courses:detail' course.id %}" class="btn btn-outline-primary">
+                            Подробнее
+                        </a>
+                        <a href="{% url 'cart:add' course.id %}" class="btn btn-success">
+                            🛒 В корзину
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
