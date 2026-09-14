@@ -76,14 +76,21 @@
                             <label class="form-label fw-bold">🔐 Подтверждение пароля *</label>
                             {{ form.password2 }}
                         </div>
+                        <!-- ✅ ОБЯЗАТЕЛЬНОЕ СОГЛАСИЕ НА ОБРАБОТКУ ПД -->
                         <div class="form-check mb-3">
-                            <input type="checkbox" class="form-check-input" id="agree_terms" name="agree_terms"
-                                   required>
-                            <label class="form-check-label" for="agree_terms">
-                                Я согласен с
-                                <a href="/pages/offer/" target="_blank">условиями публичной оферты</a>
-                                и
-                                <a href="/pages/privacy/" target="_blank">политикой конфиденциальности</a>
+                            {{ form.consent_pd }}
+                            <label class="form-check-label" for="{{ form.consent_pd.id_for_label }}">
+                                Я согласен на обработку персональных данных в соответствии с
+                                <a href="/pages/privacy/" target="_blank">Политикой конфиденциальности</a>
+                                <span class="text-danger">*</span>
+                            </label>
+                        </div>
+
+                        <!-- ✅ НЕОБЯЗАТЕЛЬНОЕ СОГЛАСИЕ НА РАССЫЛКУ -->
+                        <div class="form-check mb-3">
+                            {{ form.consent_mailing }}
+                            <label class="form-check-label" for="{{ form.consent_mailing.id_for_label }}">
+                                Я согласен на получение информационных и рекламных рассылок
                             </label>
                         </div>
 

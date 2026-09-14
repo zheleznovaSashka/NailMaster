@@ -4,6 +4,8 @@ from courses.models import Course
 from reviews.models import Review, ScreenshotReview
 from core.models import MasterInfo
 from contacts.models import ContactInfo
+from django.shortcuts import render, get_object_or_404
+from .models import Document
 
 
 def home_view(request):
@@ -18,4 +20,9 @@ def home_view(request):
         'contact': ContactInfo.objects.first(),
     }
     return render(request, 'core/home.html', context)
+
+def document_view(request, slug):
+    """Страница документа"""
+    document = get_object_or_404(Document, slug=slug, is_active=True)
+    return render(request, 'core/document.html', {'document': document})
 

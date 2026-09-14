@@ -12,6 +12,10 @@ class CustomUser(AbstractUser):
     agreed_to_terms = models.BooleanField(default=False, verbose_name='Согласие с офертой')
     agreed_at = models.DateTimeField(blank=True, null=True, verbose_name='Дата согласия')
 
+    # ✅ СОГЛАСИЯ
+    consent_pd = models.BooleanField(default=False, verbose_name='Согласие на обработку ПД')
+    consent_mailing = models.BooleanField(default=False, verbose_name='Согласие на рассылку')
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

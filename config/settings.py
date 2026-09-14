@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Сторонние
-    'django.contrib.sites',
-    'django.contrib.flatpages',
+    # 'django.contrib.sites',
+    # 'django.contrib.flatpages',
 
     # Мои приложения
     'users',
@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -83,7 +83,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
                 'contacts.context_processors.contact_info',
-
+                'core.context_processors.footer_documents',
             ],
         },
     },

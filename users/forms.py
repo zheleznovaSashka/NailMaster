@@ -45,7 +45,17 @@ class CustomUserCreationForm(UserCreationForm):
         label='Аватар',
         widget=forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'})
     )
-
+    # ✅ ГАЛОЧКИ СОГЛАСИЙ
+    consent_pd = forms.BooleanField(
+        required=True,
+        label='Согласен на обработку персональных данных',
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+    consent_mailing = forms.BooleanField(
+        required=False,
+        label='Согласен на получение рассылок',
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
     # Стилизация полей пароля
     password1 = forms.CharField(
         label='Пароль',

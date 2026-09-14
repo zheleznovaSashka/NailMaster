@@ -89,71 +89,109 @@
     <!-- Контент и последние заказы -->
     <div class="row g-4">
         <!-- Левая колонка: Управление контентом -->
-        <div class="col-lg-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header">
-                    <h5 class="mb-0">📊 Управление контентом</h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{% url 'dashboard:works_list' %}" class="text-decoration-none">
-                            🖼️ Работы: <strong class="ms-2">{{ works_count }}</strong>
-                        </a>
-                        <a href="{% url 'dashboard:work_create' %}" class="btn btn-sm btn-primary">➕</a>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{% url 'dashboard:courses_list' %}" class="text-decoration-none">
-                            📚 Курсы: <strong class="ms-2">{{ courses_count }}</strong>
-                        </a>
-                        <a href="{% url 'dashboard:course_create' %}" class="btn btn-sm btn-primary">➕</a>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{% url 'dashboard:screenshots_list' %}" class="text-decoration-none">
-                            📸 Скрины: <strong class="ms-2">{{ screenshots_count }}</strong>
-                        </a>
-                        <a href="{% url 'dashboard:screenshot_create' %}" class="btn btn-sm btn-primary">➕</a>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{% url 'dashboard:reviews_list' %}" class="text-decoration-none">
-                            ⭐ Отзывы: <strong class="ms-2">{{ total_reviews }}</strong>
-                        </a>
-                        {% if pending_reviews > 0 %}
-                        <a href="{% url 'dashboard:reviews_list' %}?filter=pending"
-                           class="badge bg-warning text-dark text-decoration-none">
-                            {{ pending_reviews }} новых
-                        </a>
-                        {% endif %}
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{% url 'dashboard:stats' %}" class="text-decoration-none">
-                            📊 <strong>Статистика</strong>
-                        </a>
-                        <span class="text-muted">📈</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{% url 'dashboard:master_edit' %}" class="text-decoration-none">
-                            👤 Информация о мастере
-                        </a>
-                        <span class="text-muted">✏️</span>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="{% url 'dashboard:contacts_edit' %}" class="text-decoration-none">
-                            📞 Контакты
-                        </a>
-                        <span class="text-muted">✏️</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{% url 'dashboard:users_list' %}" class="text-decoration-none">
-                            👥 Пользователи: <strong class="ms-2">{{ total_users }}</strong>
-                        </a>
-                        <span class="text-muted">👁️</span>
-                    </div>
-                </div>
-            </div>
+<div class="col-lg-4">
+    <div class="card shadow-sm h-100">
+        <div class="card-header">
+            <h5 class="mb-0">📊 Управление контентом</h5>
         </div>
+        <div class="card-body">
+
+            <!-- === КОНТЕНТ === -->
+            <h6 class="text-muted text-uppercase small mb-3">Контент</h6>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:works_list' %}" class="text-decoration-none text-dark">
+                    🖼️ Работы: <strong class="ms-1 text-primary">{{ works_count }}</strong>
+                </a>
+                <a href="{% url 'dashboard:work_create' %}" class="btn btn-sm btn-primary" title="Добавить работу">
+                    ➕
+                </a>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:courses_list' %}" class="text-decoration-none text-dark">
+                    📚 Курсы: <strong class="ms-1 text-primary">{{ courses_count }}</strong>
+                </a>
+                <a href="{% url 'dashboard:course_create' %}" class="btn btn-sm btn-primary" title="Добавить курс">
+                    ➕
+                </a>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:screenshots_list' %}" class="text-decoration-none text-dark">
+                    📸 Скрины: <strong class="ms-1 text-primary">{{ screenshots_count }}</strong>
+                </a>
+                <a href="{% url 'dashboard:screenshot_create' %}" class="btn btn-sm btn-primary" title="Добавить скрин">
+                    ➕
+                </a>
+            </div>
+
+            <hr>
+
+            <!-- === МОДЕРАЦИЯ === -->
+            <h6 class="text-muted text-uppercase small mb-3">Модерация</h6>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:reviews_list' %}" class="text-decoration-none text-dark">
+                    ⭐ Отзывы: <strong class="ms-1 text-primary">{{ total_reviews }}</strong>
+                </a>
+                {% if pending_reviews > 0 %}
+                <a href="{% url 'dashboard:reviews_list' %}?filter=pending"
+                   class="badge bg-warning text-dark text-decoration-none"
+                   title="Отзывы на модерации">
+                    ⚠️ {{ pending_reviews }}
+                </a>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            <!-- === СТРАНИЦЫ САЙТА === -->
+            <h6 class="text-muted text-uppercase small mb-3">Страницы сайта</h6>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:master_edit' %}" class="text-decoration-none text-dark">
+                    👤 Информация о мастере
+                </a>
+                <span class="text-muted">✏️</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:contacts_edit' %}" class="text-decoration-none text-dark">
+                    📞 Контакты
+                </a>
+                <span class="text-muted">✏️</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:documents_list' %}" class="text-decoration-none text-dark">
+                    📄 Документы
+                </a>
+                <span class="text-muted">📋</span>
+            </div>
+
+            <hr>
+
+            <!-- === АНАЛИТИКА И ПОЛЬЗОВАТЕЛИ === -->
+            <h6 class="text-muted text-uppercase small mb-3">Аналитика</h6>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a href="{% url 'dashboard:stats' %}" class="text-decoration-none text-dark">
+                    📊 Статистика
+                </a>
+                <span class="text-muted">📈</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'dashboard:users_list' %}" class="text-decoration-none text-dark">
+                    👥 Пользователи: <strong class="ms-1 text-primary">{{ total_users }}</strong>
+                </a>
+                <span class="text-muted">👁️</span>
+            </div>
+
+        </div>
+    </div>
+</div>
 
         <!-- Правая колонка: Последние заказы -->
         <div class="col-lg-8">

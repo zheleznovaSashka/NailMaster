@@ -50,8 +50,6 @@ urlpatterns = [
              template_name='users/password_reset_complete.html'
          ),
          name='password_reset_complete'),
-    # Flat pages (юридические документы)
-    path('pages/', include('django.contrib.flatpages.urls')),
 
 ]
 

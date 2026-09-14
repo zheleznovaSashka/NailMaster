@@ -125,12 +125,11 @@
     <div class="container">
         <!-- Ссылки на документы -->
         <p class="mb-3">
-            <a href="/pages/privacy/" class="text-white-50 text-decoration-none me-3">
-                Политика конфиденциальности
+            {% for doc in footer_documents %}
+            <a href="/pages/{{ doc.slug }}/" class="text-white-50 text-decoration-none me-3">
+                {{ doc.title }}
             </a>
-            <a href="/pages/offer/" class="text-white-50 text-decoration-none">
-                Публичная оферта
-            </a>
+            {% endfor %}
         </p>
 
         <!-- Соцсети и контакты -->

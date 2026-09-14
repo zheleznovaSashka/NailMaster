@@ -53,4 +53,10 @@ urlpatterns = [
     # Статистика
     path('stats/', views.stats_view, name='stats'),
 
+    # Документы
+    path('documents/', views.documents_list, name='documents_list'),
+    path('documents/<int:pk>/edit/', views.document_edit, name='document_edit'),
+    path('documents/create/', views.document_create, name='document_create'),
+    path('documents/<int:pk>/delete/', views.document_delete, name='document_delete'),
+
 ]

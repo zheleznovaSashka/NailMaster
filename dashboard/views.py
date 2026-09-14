@@ -14,6 +14,7 @@ from core.models import MasterInfo
 from contacts.models import ContactInfo
 from datetime import datetime, timedelta
 from django.db.models.functions import TruncDate, TruncMonth
+from core.models import Document
 
 
 def is_staff(user):
@@ -821,3 +822,76 @@ def stats_view(request):
 def order_not_found(request, pk=None):
     """Страница 'Заказ не найден'"""
     return render(request, 'dashboard/order_not_found.html', {'order_id': pk}, status=404)
+
+
+# ================== УПРАВЛЕНИЕ ДОКУМЕНТАМИ ==================
+
+@login_required
+@user_passes_test(is_staff, login_url='/')
+def documents_list(request):
+    """Список документов"""
+    documents = Document.objects.all().order_by('order', 'title')
+    return render(request, 'dashboard/documents_list.html', {'documents': documents})
+
+
+@login_required
+@user_passes_test(is_staff, login_url='/')
+def document_create(request):
+    """Создание документа"""
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        slug = request.POST.get('slug')
+        content = request.POST.get('content', '')
+        order = request.POST.get('order', 0)
+        is_active = request.POST.get('is_active') == 'on'
+
+        if not title or not slug:
+            messages.error(request, '❌ Заполните заголовок и URL-код!')
+        else:
+            Document.objects.create(
+                title=title,
+                slug=slug,
+                content=content,
+                order=order,
+                is_active=is_active,
+            )
+            messages.success(request, f'✅ Документ "{title}" создан!')
+            return redirect('dashboard:documents_list')
+
+    return render(request, 'dashboard/document_form.html', {'action': 'create'})
+
+
+@login_required
+@user_passes_test(is_staff, login_url='/')
+def document_edit(request, pk):
+    """Редактирование документа"""
+    document = get_object_or_404(Document, pk=pk)
+
+    if request.method == 'POST':
+        document.title = request.POST.get('title', document.title)
+        document.slug = request.POST.get('slug', document.slug)
+        document.content = request.POST.get('content', document.content)
+        document.order = request.POST.get('order', document.order)
+        document.is_active = request.POST.get('is_active') == 'on'
+        document.save()
+
+        messages.success(request, f'✅ Документ "{document.title}" обновлён!')
+        return redirect('dashboard:documents_list')
+
+    return render(request, 'dashboard/document_form.html', {'document': document, 'action': 'edit'})
+
+
+@login_required
+@user_passes_test(is_staff, login_url='/')
+def document_delete(request, pk):
+    """Удаление документа"""
+    document = get_object_or_404(Document, pk=pk)
+
+    if request.method == 'POST':
+        title = document.title
+        document.delete()
+        messages.success(request, f'🗑️ Документ "{title}" удалён!')
+        return redirect('dashboard:documents_list')
+
+    return render(request, 'dashboard/document_delete.html', {'document': document})
+
