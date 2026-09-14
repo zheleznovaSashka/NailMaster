@@ -21,15 +21,14 @@
 <!-- Навигация -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
-            <span class="logo-star"
-                  style="display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--gradient); box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);">
-    <span style="color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; font-size: 1.3rem; font-weight: 800; background: none;">N</span>
-</span>
-            <span style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.4rem;">
+        <div class="d-flex align-items-center gap-2">
+            <a href="{% url 'home' %}" style="text-decoration: none;">
+                <span class="logo-star">N</span>
+            </a>
+            <a href="{% url 'home' %}" class="navbar-brand-text" style="text-decoration: none;">
                 Nail Master
-            </span>
-        </a>
+            </a>
+        </div>
 
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -56,13 +55,6 @@
                 </li>
 
                 {% if user.is_authenticated %}
-                <!-- Избранное -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:favorites' %}" title="Избранное">
-                        <i class="bi bi-heart-fill text-danger"></i> Избранное
-                    </a>
-                </li>
-
                 <!-- Заказы -->
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'orders:list' %}">
