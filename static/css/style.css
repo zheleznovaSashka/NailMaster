@@ -943,3 +943,102 @@ main {
     font-size: 1.4rem;
     font-weight: 800;
 }
+/* ==================== ПОЛЕ ПОИСКА ==================== */
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    color: #2d3436 !important;                /* тёмный текст */
+    caret-color: #6c5ce7 !important;          /* фиолетовый курсор */
+    background-color: #ffffff !important;     /* белый фон */
+    border-color: #6c5ce7 !important;         /* фиолетовая рамка при фокусе */
+    box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25) !important;
+}
+
+/* Поле поиска в навигации — компактное */
+.navbar input[type="search"],
+.navbar input[type="text"] {
+    color: #2d3436 !important;
+    caret-color: #6c5ce7 !important;
+}
+
+/* Плейсхолдер — серый, но видимый */
+::placeholder {
+    color: #adb5bd !important;
+    opacity: 1 !important;
+}
+
+/* Курсор ввода — фиолетовый */
+input, textarea, select {
+    caret-color: #6c5ce7 !important;
+}
+
+/* Большое поле поиска на странице /search/ */
+.input-group-lg input {
+    color: #2d3436 !important;
+    caret-color: #6c5ce7 !important;
+    background-color: #ffffff !important;
+    border: 2px solid #e0e0e0 !important;
+    transition: border-color 0.3s;
+}
+
+.input-group-lg input:focus {
+    border-color: #6c5ce7 !important;
+    box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25) !important;
+    outline: none;
+}
+
+.input-group-lg input::placeholder {
+    color: #b0b0b0 !important;
+}
+/* Жёсткая фиксация для всех полей */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea {
+    color: #2d3436 !important;
+    caret-color: #6c5ce7 !important;
+    background-color: #ffffff !important;
+}
+
+/* ==================== КУРСОР В ПОЛЕ ПОИСКА ==================== */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+textarea {
+    cursor: text !important;
+    color: #2d3436 !important;
+    caret-color: #6c5ce7 !important;
+    background-color: #ffffff !important;
+}
+
+input[type="text"]:hover,
+input[type="search"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+textarea:hover {
+    cursor: text !important;
+    background-color: #ffffff !important;
+    border-color: #6c5ce7 !important;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    cursor: text !important;
+    background-color: #ffffff !important;
+    border-color: #6c5ce7 !important;
+    box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25) !important;
+    outline: none !important;
+}
+
+/* Для поля поиска в навигации */
+form input[name="q"] {
+    cursor: text !important;
+    color: #2d3436 !important;
+    caret-color: #6c5ce7 !important;
+    background-color: #ffffff !important;
+}
