@@ -1042,3 +1042,45 @@ form input[name="q"] {
     caret-color: #6c5ce7 !important;
     background-color: #ffffff !important;
 }
+
+/* ==================== КОМПАКТНЫЕ КНОПКИ СОЦСЕТЕЙ (для заказов) ==================== */
+.social-btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: white !important;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.social-btn-sm:hover {
+    transform: translateY(-2px);
+    color: white !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.social-btn-sm i {
+    font-size: 1.2rem;
+}
+
+.telegram-btn-sm {
+    background: linear-gradient(135deg, #0088cc, #00b4d8);
+}
+
+.max-btn-sm {
+    background: linear-gradient(135deg, #8e44ad, #c56cf0);
+}
+
+/* ==================== КНОПКИ КУРСОВ И РАБОТ (для поиска) ==================== */
+.courses-btn-sm {
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+}
+
+.works-btn-sm {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+}

@@ -98,14 +98,18 @@
 
                         <div class="d-flex gap-2 flex-wrap">
                             {% if global_contact.telegram %}
-                            <a href="{{ global_contact.telegram }}" target="_blank" class="btn btn-primary btn-lg">
-                                <i class="bi bi-telegram"></i> Написать в Telegram
+                            <a href="{{ global_contact.telegram }}" target="_blank"
+                               class="social-btn-sm telegram-btn-sm">
+                                <i class="bi bi-telegram"></i>
+                                <span>Написать в Telegram</span>
                             </a>
                             {% endif %}
 
                             {% if global_contact.max_messenger %}
-                            <a href="{{ global_contact.max_messenger }}" target="_blank" class="btn btn-info btn-lg">
-                                <i class="bi bi-chat-dots"></i> Написать в MAX
+                            <a href="{{ global_contact.max_messenger }}" target="_blank"
+                               class="social-btn-sm max-btn-sm">
+                                <i class="bi bi-chat-dots-fill"></i>
+                                <span>Написать в MAX</span>
                             </a>
                             {% endif %}
                         </div>
