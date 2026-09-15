@@ -7,7 +7,8 @@
 <div class="container py-5">
     <h1 class="text-center mb-4">Онлайн курсы</h1>
     <div class="row g-4">
-        {% for course in courses %}
+        {% for item in courses_data %}
+        {% with course=item.course %}
         <div class="col-md-4">
             <div class="card h-100 shadow-sm">
                 <div class="position-relative">
@@ -37,10 +38,14 @@
                     </form>
                     {% endif %}
 
-                    <!-- Метка "Заказан" или "Куплен" -->
+                    <!-- Метка статуса -->
                     {% if course.id in purchased_course_ids %}
                     <span class="badge bg-success position-absolute top-0 start-0 m-2" style="font-size: 0.85rem;">
-                        ✅ Заказан
+                        ✅ Куплен
+                    </span>
+                    {% elif item.pending_order_id %}
+                    <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2" style="font-size: 0.85rem;">
+                        ⏳ Ожидает оплаты
                     </span>
                     {% endif %}
                 </div>
@@ -56,12 +61,17 @@
                         </a>
 
                         {% if course.id in purchased_course_ids %}
-                            <!-- ✅ ЕСТЬ АКТИВНЫЙ ЗАКАЗ (pending/paid/completed) -->
-                            <button class="btn btn-success" disabled>
-                                ✅ Заказан
-                            </button>
+                            <!-- ✅ КУПЛЕН — ведёт на детальную страницу курса -->
+                            <a href="{% url 'courses:detail' course.id %}" class="btn btn-success">
+                                ✅ Смотреть курс
+                            </a>
+                        {% elif item.pending_order_id %}
+                            <!-- ⏳ ОЖИДАЕТ ОПЛАТЫ — ведёт на детали заказа -->
+                            <a href="{% url 'orders:detail' item.pending_order_id %}" class="btn btn-warning">
+                                ⏳ Ожидает оплаты
+                            </a>
                         {% elif course.id in cart_course_ids %}
-                            <!-- 🛒 КУРС В КОРЗИНЕ -->
+                            <!-- 🛒 В КОРЗИНЕ -->
                             <a href="{% url 'cart:view' %}" class="btn btn-info">
                                 🛒 В корзине
                             </a>
@@ -75,6 +85,7 @@
                 </div>
             </div>
         </div>
+        {% endwith %}
         {% empty %}
         <div class="col-12 text-center">
             <p class="text-muted">Пока нет курсов</p>

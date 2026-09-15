@@ -43,7 +43,7 @@
 
                     <hr class="my-4">
 
-                    <!-- ВИДЕО: показываем ТОЛЬКО если куплен и оплачен -->
+                    <!-- ВИДЕО: показываем ТОЛЬКО если куплен -->
                     {% if has_access %}
                     <div class="alert alert-success">
                         <h5 class="mb-2">✅ Доступ открыт!</h5>
@@ -98,15 +98,15 @@
                                 📦 Мои заказы
                             </a>
                         </div>
-                        {% elif has_active_order %}
+                        {% elif pending_order %}
                         <!-- ⏳ ЗАКАЗ ОФОРМЛЕН, НО НЕ ОПЛАЧЕН -->
                         <div class="alert alert-warning mb-0 w-100">
-                            <h5 class="mb-1">⏳ Курс уже заказан</h5>
+                            <h5 class="mb-1">⏳ Заказ ожидает оплаты</h5>
                             <p class="mb-2 small">
-                                Ваш заказ ожидает оплаты. Свяжитесь со мной для завершения покупки.
+                                Вы уже оформили заказ на этот курс. Свяжитесь со мной для завершения покупки.
                             </p>
-                            <a href="{% url 'orders:list' %}" class="btn btn-warning">
-                                📦 Мои заказы
+                            <a href="{% url 'orders:detail' pending_order.id %}" class="btn btn-warning">
+                                📦 Перейти к заказу
                             </a>
                         </div>
                         {% elif in_cart %}

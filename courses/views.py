@@ -10,10 +10,10 @@ def course_list(request):
 
     favorite_course_ids = []
     cart_course_ids = []
+    pending_orders = {}      # {course_id: order_id}
     purchased_course_ids = []
 
     if request.user.is_authenticated:
-        # Курсы в избранном
         favorite_course_ids = list(
             Favorite.objects.filter(
                 user=request.user,
@@ -21,22 +21,35 @@ def course_list(request):
             ).values_list('course_id', flat=True)
         )
 
-        # Курсы в корзине
         cart = request.session.get('cart', {})
         cart_course_ids = [int(cid) for cid in cart.keys()]
 
-        # Курсы с активными заказами (pending, paid, completed)
+        # Заказы в ожидании оплаты
+        for order in Order.objects.filter(user=request.user, status='pending'):
+            for course in order.courses.all():
+                pending_orders[course.id] = order.id
+
+        # Купленные курсы
         purchased_course_ids = list(
             Order.objects.filter(
                 user=request.user,
-                status__in=['pending', 'paid', 'completed']   # ← ДОБАВИЛИ 'pending'
+                status__in=['paid', 'completed']
             ).values_list('courses__id', flat=True)
         )
 
+    # ⚠️ Оборачиваем курсы в список кортежей (course, order_id)
+    courses_data = []
+    for course in courses:
+        courses_data.append({
+            'course': course,
+            'pending_order_id': pending_orders.get(course.id),
+        })
+
     context = {
-        'courses': courses,
+        'courses_data': courses_data,
         'favorite_course_ids': favorite_course_ids,
         'cart_course_ids': cart_course_ids,
+        'pending_orders': pending_orders,
         'purchased_course_ids': purchased_course_ids,
     }
     return render(request, 'courses/list.html', context)
@@ -47,40 +60,35 @@ def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk)
 
     has_access = False
+    pending_order = None
     in_cart = False
     is_favorite = False
 
     if request.user.is_authenticated:
-        # Курс оплачен или завершён — доступ к видео
         has_access = Order.objects.filter(
             user=request.user,
             courses=course,
-            status__in=['paid', 'completed']   # ← доступ только для paid/completed
+            status__in=['paid', 'completed']
         ).exists()
 
-        # Есть активный заказ (pending, paid, completed)
-        has_active_order = Order.objects.filter(
+        pending_order = Order.objects.filter(
             user=request.user,
             courses=course,
-            status__in=['pending', 'paid', 'completed']
-        ).exists()
+            status='pending'
+        ).first()
 
-        # В корзине ли
         cart = request.session.get('cart', {})
         in_cart = str(course.id) in cart
 
-        # В избранном ли
         is_favorite = Favorite.objects.filter(
             user=request.user,
             course=course
         ).exists()
-    else:
-        has_active_order = False
 
     context = {
         'course': course,
-        'has_access': has_access,       # доступ к видео (только paid/completed)
-        'has_active_order': has_active_order,  # есть активный заказ (включая pending)
+        'has_access': has_access,
+        'pending_order': pending_order,
         'in_cart': in_cart,
         'is_favorite': is_favorite,
     }
