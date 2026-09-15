@@ -36,6 +36,13 @@
                         </button>
                     </form>
                     {% endif %}
+
+                    <!-- Метка "Заказан" или "Куплен" -->
+                    {% if course.id in purchased_course_ids %}
+                    <span class="badge bg-success position-absolute top-0 start-0 m-2" style="font-size: 0.85rem;">
+                        ✅ Заказан
+                    </span>
+                    {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ course.title }}</h5>
@@ -47,9 +54,23 @@
                         <a href="{% url 'courses:detail' course.id %}" class="btn btn-outline-primary">
                             Подробнее
                         </a>
-                        <a href="{% url 'cart:add' course.id %}" class="btn btn-success">
-                            🛒 В корзину
-                        </a>
+
+                        {% if course.id in purchased_course_ids %}
+                            <!-- ✅ ЕСТЬ АКТИВНЫЙ ЗАКАЗ (pending/paid/completed) -->
+                            <button class="btn btn-success" disabled>
+                                ✅ Заказан
+                            </button>
+                        {% elif course.id in cart_course_ids %}
+                            <!-- 🛒 КУРС В КОРЗИНЕ -->
+                            <a href="{% url 'cart:view' %}" class="btn btn-info">
+                                🛒 В корзине
+                            </a>
+                        {% else %}
+                            <!-- 🆕 МОЖНО КУПИТЬ -->
+                            <a href="{% url 'cart:add' course.id %}" class="btn btn-success">
+                                🛒 В корзину
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

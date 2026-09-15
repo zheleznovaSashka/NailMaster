@@ -31,12 +31,33 @@ def cart_view(request):
 def add_to_cart(request, course_id):
     """Добавление курса в корзину"""
     course = get_object_or_404(Course, pk=course_id)
+
+    if not request.user.is_authenticated:
+        messages.warning(request, '🔐 Войдите, чтобы добавить курс в корзину')
+        return redirect('login')
+
+    # Проверяем, есть ли активный заказ с этим курсом
+    # (pending, paid, completed — но НЕ cancelled)
+    already_ordered = Order.objects.filter(
+        user=request.user,
+        courses=course,
+        status__in=['pending', 'paid', 'completed']
+    ).exists()
+
+    if already_ordered:
+        messages.info(request, f'✅ Курс "{course.title}" уже заказан! Проверьте раздел «Заказы».')
+        return redirect('courses:detail', pk=course.id)
+
     cart = request.session.get('cart', {})
 
-    cart[str(course_id)] = cart.get(str(course_id), 0) + 1
+    if str(course_id) in cart:
+        messages.info(request, f'🛒 Курс "{course.title}" уже в корзине!')
+        return redirect('cart:view')
+
+    cart[str(course_id)] = 1
     request.session['cart'] = cart
 
-    messages.success(request, f'Курс "{course.title}" добавлен в корзину!')
+    messages.success(request, f'✅ Курс "{course.title}" добавлен в корзину!')
     return redirect('cart:view')
 
 
@@ -58,11 +79,13 @@ def clear_cart(request):
     messages.success(request, 'Корзина очищена')
     return redirect('cart:view')
 
+
 def clear_session_cart(request):
     """Очистка корзины в сессии"""
     request.session['cart'] = {}
     request.session.modified = True
     return redirect('home')
+
 
 def checkout(request):
     """Оформление заказа"""
@@ -111,8 +134,5 @@ def checkout(request):
     # Очищаем корзину
     request.session['cart'] = {}
 
-
     messages.success(request, f'✅ Заказ #{order.id} оформлен! Свяжитесь со мной для оплаты.')
     return redirect('orders:detail', pk=order.id)
-
-
