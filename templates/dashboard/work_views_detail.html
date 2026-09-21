@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Просмотры: {{ work.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:work_views_list' %}">Просмотры работ</a></li>
+            <li class="breadcrumb-item active">{{ work.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4 mb-4">
+        <!-- Работа -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                {% if work.image %}
+                <img src="{{ work.image.url }}" class="card-img-top"
+                     alt="{{ work.title }}" style="height: 250px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ work.title }}</h5>
+                    <p class="card-text text-muted small">{{ work.description|truncatewords:20 }}</p>
+                    <a href="/portfolio/{{ work.id }}/" target="_blank" class="btn btn-sm btn-outline-secondary w-100">
+                        🔗 Открыть на сайте
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Статистика -->
+        <div class="col-lg-8">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card text-center" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white;">
+                        <div class="card-body">
+                            <h2 class="mb-1">{{ total_views }}</h2>
+                            <small>Всего просмотров</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center" style="background: linear-gradient(135deg, #00b894, #55efc4); color: white;">
+                        <div class="card-body">
+                            <h2 class="mb-1">{{ registered_views }}</h2>
+                            <small>Зарегистрированных</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center" style="background: linear-gradient(135deg, #fdcb6e, #f39c12); color: white;">
+                        <div class="card-body">
+                            <h2 class="mb-1">{{ guest_views }}</h2>
+                            <small>Гостей</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Список просмотров -->
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">📋 Кто смотрел (последние 50)</h5>
+        </div>
+        <div class="card-body">
+            {% if views %}
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Кто</th>
+                                <th>Когда</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for view in views %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    {% if view.user %}
+                                        <i class="bi bi-person-circle text-primary"></i>
+                                        <strong>{{ view.user.username }}</strong>
+                                        <br><small class="text-muted">{{ view.user.email }}</small>
+                                    {% else %}
+                                        <i class="bi bi-incognito text-secondary"></i>
+                                        <span class="text-muted">Гость</span>
+                                        <br><small class="text-muted">ID: {{ view.session_key|slice:":12" }}...</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <small>{{ view.created_at|date:"d.m.Y H:i:s" }}</small>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted text-center py-4 mb-0">Пока никто не смотрел эту работу</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

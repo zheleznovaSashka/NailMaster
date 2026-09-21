@@ -120,7 +120,7 @@
                             <div>
                                 <strong>Заказ #{{ order.id }}</strong>
                                 <br>
-                                <small class="text-muted">{{ order.user.username }} • {{ order.created_at|date:"d.m.Y H:i" }}</small>
+                                <small class="text-muted">{{ order.user.username }} - {{ order.created_at|date:"d.m.Y H:i" }}</small>
                             </div>
                             <div class="text-end">
                                 <div class="fw-bold text-primary">{{ order.total_price }} ₽</div>
@@ -158,7 +158,7 @@
                     <small class="text-muted">{{ review.created_at|date:"d.m.Y H:i" }}</small>
                 </div>
                 <p class="mb-1">{{ review.text|truncatewords:30 }}</p>
-                <small class="text-muted">⭐ {{ review.rating }}/5 • {{ review.get_review_type_display }}</small>
+                <small class="text-muted">⭐ {{ review.rating }}/5 - {{ review.get_review_type_display }}</small>
             </div>
             {% endfor %}
         </div>

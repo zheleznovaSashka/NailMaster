@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ work.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <img src="{{ work.image.url }}"
+                     class="card-img-top"
+                     alt="{{ work.title }}"
+                     style="max-height: 600px; object-fit: cover; cursor: pointer;"
+                     onclick="openImage('{{ work.image.url }}')">
+                <div class="card-body p-4">
+                    <h1 class="mb-3">{{ work.title }}</h1>
+
+                    <div class="d-flex flex-wrap gap-3 mb-3 text-muted">
+                        <span>
+                            <i class="bi bi-eye"></i> {{ work.views }} просмотров
+                        </span>
+                        <span>
+                            <i class="bi bi-calendar"></i> {{ work.created_at|date:"d.m.Y" }}
+                        </span>
+                    </div>
+
+                    <p class="card-text fs-5">{{ work.description }}</p>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="{% url 'portfolio:list' %}" class="btn btn-outline-secondary">
+                            ← Все работы
+                        </a>
+
+                        {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'users:toggle_work_favorite' work.id %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger">
+                                {% if work.id in favorite_work_ids %}❤️ В избранном{% else %}🤍 В избранное{% endif %}
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                    <!-- ПОДЕЛИТЬСЯ -->
+                    {% include 'includes/share.html' with share_title=work.title %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

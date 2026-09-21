@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Просмотры работ{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Панель</a></li>
+            <li class="breadcrumb-item active">Просмотры работ</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="mb-1">👁️ Просмотры работ</h1>
+            <p class="text-muted mb-0">Всего работ: {{ works.count }}</p>
+        </div>
+        <a href="{% url 'dashboard:works_list' %}" class="btn btn-outline-secondary">
+            🖼️ Управление работами
+        </a>
+    </div>
+
+    {% if works %}
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Работа</th>
+                            <th>Просмотры</th>
+                            <th>Добавлена</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for work in works %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    {% if work.image %}
+                                    <img src="{{ work.image.url }}"
+                                         class="rounded me-3"
+                                         style="width: 60px; height: 60px; object-fit: cover;">
+                                    {% endif %}
+                                    <div>
+                                        <strong>{{ work.title }}</strong>
+                                        {% if work.is_featured %}
+                                        <br><span class="badge bg-success">✨ На главной</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary fs-6">
+                                    <i class="bi bi-eye"></i> {{ work.views }}
+                                </span>
+                            </td>
+                            <td>
+                                <small>{{ work.created_at|date:"d.m.Y" }}</small>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="{% url 'dashboard:work_views_detail' work.pk %}"
+                                       class="btn btn-sm btn-outline-primary" title="Подробно">
+                                        👁️ Детали
+                                    </a>
+                                    <a href="/portfolio/{{ work.id }}/" target="_blank"
+                                       class="btn btn-sm btn-outline-secondary" title="Посмотреть">
+                                        🔗
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div class="display-1 mb-3">🖼️</div>
+            <h3>Пока нет работ</h3>
+            <p class="text-muted">Добавьте первую работу, чтобы отслеживать просмотры</p>
+            <a href="{% url 'dashboard:work_create' %}" class="btn btn-primary btn-lg mt-3">
+                ➕ Добавить работу
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

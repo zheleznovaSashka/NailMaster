@@ -60,10 +60,10 @@
                 </li>
 
                 {% if user.is_authenticated %}
-                <!-- Заказы -->
+                <!-- Мои покупки -->
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'orders:list' %}">
-                        <i class="bi bi-box-seam"></i> Заказы
+                        <i class="bi bi-bag-check"></i> Мои покупки
                     </a>
                 </li>
                 {% endif %}

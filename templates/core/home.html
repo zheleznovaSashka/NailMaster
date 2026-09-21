@@ -276,6 +276,13 @@
     </div>
 </section>
 
+<!-- ПОДЕЛИТЬСЯ -->
+<section class="py-4">
+    <div class="container text-center">
+        {% include 'includes/share.html' with share_title="Мастер маникюра - Nail Master" %}
+    </div>
+</section>
+
 
 <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ФОТО -->
 <div id="imageModal"
@@ -292,5 +299,19 @@
         ✕
     </button>
 </div>
+<script>
+    function toggleAbout(event) {
+        event.preventDefault();
+        const short = document.getElementById('aboutShort');
+        const full = document.getElementById('aboutFull');
 
+        if (short.style.display === 'none') {
+            short.style.display = 'block';
+            full.style.display = 'none';
+        } else {
+            short.style.display = 'none';
+            full.style.display = 'block';
+        }
+    }
+</script>
 {% endblock %}

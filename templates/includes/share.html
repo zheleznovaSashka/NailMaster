@@ -1,0 +1,58 @@
+<!-- Кнопка "Поделиться" -->
+<div class="share-block mt-4">
+    <h6 class="mb-3 text-muted">
+        <i class="bi bi-share"></i> Поделиться:
+    </h6>
+    <div class="d-flex gap-2 flex-wrap">
+        <!-- Telegram -->
+        <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ share_title|urlencode }}"
+           target="_blank"
+           class="share-btn share-telegram"
+           title="Поделиться в Telegram">
+            <i class="bi bi-telegram"></i> Telegram
+        </a>
+
+        <!-- VK -->
+        <a href="https://vk.com/share.php?url={{ request.build_absolute_uri }}&title={{ share_title|urlencode }}"
+           target="_blank"
+           class="share-btn share-vk"
+           title="Поделиться во ВКонтакте">
+            <i class="bi bi-chat"></i> VK
+        </a>
+
+        <!-- MAX (мессенджер) -->
+        <a href="https://max.ru/share?text={{ share_title|urlencode }}%20{{ request.build_absolute_uri }}"
+           target="_blank"
+           class="share-btn share-max"
+           title="Поделиться в MAX">
+            <i class="bi bi-chat-dots-fill"></i> MAX
+        </a>
+
+        <!-- Копировать ссылку -->
+        <button type="button"
+                class="share-btn share-copy"
+                onclick="copyLink(this)"
+                data-link="{{ request.build_absolute_uri }}"
+                title="Скопировать ссылку">
+            <i class="bi bi-link-45deg"></i> <span>Копировать</span>
+        </button>
+    </div>
+</div>
+
+<script>
+function copyLink(btn) {
+    const link = btn.getAttribute('data-link');
+    navigator.clipboard.writeText(link).then(function() {
+        const span = btn.querySelector('span');
+        const originalText = span.textContent;
+        span.textContent = 'Скопировано!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+            span.textContent = originalText;
+            btn.classList.remove('copied');
+        }, 2000);
+    }).catch(function(err) {
+        alert('Не удалось скопировать: ' + err);
+    });
+}
+</script>

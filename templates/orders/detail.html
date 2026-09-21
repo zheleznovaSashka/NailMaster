@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Заказ #{{ order.id }}{% endblock %}
+{% block title %}Покупка #{{ order.id }}{% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -9,7 +9,7 @@
         <div class="col-lg-8 mx-auto">
             <div class="card shadow">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Заказ #{{ order.id }}</h3>
+                    <h3 class="mb-0">Покупка #{{ order.id }}</h3>
                     {% if order.status == 'pending' %}
                     <span class="badge bg-warning text-dark fs-6">⏳ Ожидает оплаты</span>
                     {% elif order.status == 'paid' %}
@@ -77,7 +77,7 @@
 
                     <div class="d-flex gap-2 flex-wrap">
                         <a href="{% url 'orders:list' %}" class="btn btn-outline-secondary">
-                            ← Мои заказы
+                            ← Мои покупки
                         </a>
                         {% if order.status == 'pending' %}
                         <a href="{% url 'orders:cancel' order.id %}" class="btn btn-outline-danger">

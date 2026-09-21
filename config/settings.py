@@ -84,6 +84,8 @@ TEMPLATES = [
                 'cart.context_processors.cart',
                 'contacts.context_processors.contact_info',
                 'core.context_processors.footer_documents',
+                'portfolio.context_processors.recent_works',
+
             ],
         },
     },

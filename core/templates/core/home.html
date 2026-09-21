@@ -13,19 +13,24 @@
 
                 <!-- Информация о мастере с раскрытием -->
                 <div class="lead fs-5 mb-4 text-muted">
+                    {% if master %}
                     <div id="aboutShort">
-                        {{ master.about|truncatewords:25|default:"Профессиональный мастер с многолетним опытом работы"
-                        }}
                         {% if master.about|length > 150 %}
+                        {{ master.about|truncatewords:25 }}
                         <a href="#" onclick="toggleAbout(event)" class="text-decoration-none fw-bold"
                            style="color: var(--primary-color);">Читать далее →</a>
+                        {% else %}
+                        {{ master.about }}
                         {% endif %}
                     </div>
                     <div id="aboutFull" style="display: none;">
-                        {{ master.about|default:"Профессиональный мастер с многолетним опытом работы" }}
+                        {{ master.about }}
                         <a href="#" onclick="toggleAbout(event)" class="text-decoration-none fw-bold d-block mt-2"
                            style="color: var(--primary-color);">← Свернуть</a>
                     </div>
+                    {% else %}
+                    <p>Профессиональный мастер с многолетним опытом работы</p>
+                    {% endif %}
                 </div>
 
                 <div class="d-flex gap-3 flex-wrap mb-4">
@@ -230,17 +235,6 @@
             short.style.display = 'none';
             full.style.display = 'block';
         }
-    }
-
-    function openImage(url) {
-        document.getElementById('modalImage').src = url;
-        document.getElementById('imageModal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeImage() {
-        document.getElementById('imageModal').style.display = 'none';
-        document.body.style.overflow = 'auto';
     }
 </script>
 {% endblock %}

@@ -1084,3 +1084,105 @@ form input[name="q"] {
 .works-btn-sm {
     background: linear-gradient(135deg, #fd79a8, #e84393);
 }
+
+/* ==================== ВОДЯНОЙ ЗНАК НА ВИДЕО ==================== */
+.video-watermark {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.2rem;
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 10;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    user-select: none;
+    white-space: nowrap;
+    animation: watermarkMove 20s linear infinite;
+}
+
+@keyframes watermarkMove {
+    0% {
+        top: 10%;
+        left: 5%;
+    }
+    25% {
+        top: 15%;
+        left: 60%;
+    }
+    50% {
+        top: 70%;
+        left: 70%;
+    }
+    75% {
+        top: 60%;
+        left: 10%;
+    }
+    100% {
+        top: 10%;
+        left: 5%;
+    }
+}
+
+/* ==================== КНОПКА "ПОДЕЛИТЬСЯ" ==================== */
+.share-block {
+    padding: 15px 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: white !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    color: white !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.share-btn i {
+    font-size: 1rem;
+}
+
+.share-telegram {
+    background: linear-gradient(135deg, #0088cc, #00b4d8);
+}
+
+.share-vk {
+    background: linear-gradient(135deg, #45668e, #5678a8);
+}
+
+.share-max {
+    background: linear-gradient(135deg, #8e44ad, #c56cf0);
+    color: white !important;
+}
+
+.share-copy {
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+}
+
+.share-copy.copied {
+    background: linear-gradient(135deg, #00b894, #55efc4);
+}
+
+@media (max-width: 576px) {
+    .share-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    .share-btn i {
+        font-size: 0.9rem;
+    }
+}

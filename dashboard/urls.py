@@ -59,4 +59,8 @@ urlpatterns = [
     path('documents/create/', views.document_create, name='document_create'),
     path('documents/<int:pk>/delete/', views.document_delete, name='document_delete'),
 
+    # Просмотры работ
+    path('work-views/', views.work_views_list, name='work_views_list'),
+    path('work-views/<int:pk>/', views.work_views_detail, name='work_views_detail'),
+
 ]

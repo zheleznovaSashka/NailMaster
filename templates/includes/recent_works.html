@@ -1,0 +1,35 @@
+{% load static %}
+
+{% if recent_works %}
+<section class="py-5" style="background: #f8f0ff;">
+    <div class="container">
+        <h2 class="text-center mb-5 d-block">🕐 Вы недавно смотрели</h2>
+        <div class="row g-4">
+            {% for work in recent_works %}
+            <div class="col-md-3 col-sm-6">
+                <div class="card h-100 shadow-sm">
+                    <a href="{% url 'portfolio:detail' work.id %}" class="text-decoration-none">
+                        {% if work.image %}
+                        <img src="{{ work.image.url }}"
+                             class="card-img-top"
+                             alt="{{ work.title }}"
+                             style="height: 180px; object-fit: cover;">
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <a href="{% url 'portfolio:detail' work.id %}" class="text-decoration-none text-dark">
+                                {{ work.title }}
+                            </a>
+                        </h6>
+                        <small class="text-muted">
+                            <i class="bi bi-eye"></i> {{ work.views }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

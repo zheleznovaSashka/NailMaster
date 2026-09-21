@@ -95,7 +95,7 @@
                             <h5 class="mb-1">✅ У вас уже есть этот курс!</h5>
                             <p class="mb-2 small">Вы можете просмотреть его в любое время.</p>
                             <a href="{% url 'orders:list' %}" class="btn btn-success">
-                                📦 Мои заказы
+                                🛍️ Мои покупки
                             </a>
                         </div>
                         {% elif pending_order %}
@@ -106,7 +106,7 @@
                                 Вы уже оформили заказ на этот курс. Свяжитесь со мной для завершения покупки.
                             </p>
                             <a href="{% url 'orders:detail' pending_order.id %}" class="btn btn-warning">
-                                📦 Перейти к заказу
+                                🛍️ Перейти к покупкам
                             </a>
                         </div>
                         {% elif in_cart %}
@@ -132,6 +132,10 @@
                         {% endif %}
                         {% endif %}
                     </div>
+
+                    <!-- ПОДЕЛИТЬСЯ -->
+                    {% include 'includes/share.html' with share_title=course.title %}
+
                 </div>
             </div>
         </div>

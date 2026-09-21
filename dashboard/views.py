@@ -8,7 +8,7 @@ from django.http import Http404
 from users.models import CustomUser
 from orders.models import Order
 from reviews.models import Review, ScreenshotReview
-from portfolio.models import Work
+from portfolio.models import Work, WorkView
 from courses.models import Course
 from core.models import MasterInfo
 from contacts.models import ContactInfo
@@ -894,4 +894,40 @@ def document_delete(request, pk):
         return redirect('dashboard:documents_list')
 
     return render(request, 'dashboard/document_delete.html', {'document': document})
+
+
+# ================== ПРОСМОТРЫ РАБОТ ==================
+
+@login_required
+@user_passes_test(is_staff, login_url='/')
+def work_views_list(request):
+    """Список работ с просмотрами"""
+    works = Work.objects.all().order_by('-views')
+
+    context = {
+        'works': works,
+    }
+    return render(request, 'dashboard/work_views_list.html', context)
+
+
+@login_required
+@user_passes_test(is_staff, login_url='/')
+def work_views_detail(request, pk):
+    """Просмотры конкретной работы"""
+    work = get_object_or_404(Work, pk=pk)
+    views = WorkView.objects.filter(work=work).order_by('-created_at')
+
+    # Статистика
+    total_views = views.count()
+    registered_views = views.filter(user__isnull=False).count()
+    guest_views = views.filter(user__isnull=True).count()
+
+    context = {
+        'work': work,
+        'views': views[:50],  # Последние 50
+        'total_views': total_views,
+        'registered_views': registered_views,
+        'guest_views': guest_views,
+    }
+    return render(request, 'dashboard/work_views_detail.html', context)
 
