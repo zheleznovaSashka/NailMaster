@@ -221,8 +221,7 @@
                                 <strong>Заказ #{{ order.id }}</strong>
                             </a>
                             <br>
-                            <small class="text-muted">{{ order.user.username }} - {{ order.created_at|date:"d.m.Y H:i"
-                                }}</small>
+                            <small class="text-muted">{{ order.user.username }} - {{ order.created_at|date:"d.m.Y H:i" }}</small>
                         </div>
                         <div class="text-end">
                             <div class="fw-bold text-primary">{{ order.total_price }} ₽</div>
