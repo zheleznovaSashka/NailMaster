@@ -4,12 +4,6 @@ meta:
     name: pip
     version: 3.12
 
-build:
-  requirementsPath: requirements.txt
-  commands:
-    - python manage.py migrate
-    - python manage.py collectstatic --no-input
-
 run:
-  command: gunicorn config.wsgi:application --bind 0.0.0.0:80
+  command: python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:80
   containerPort: 80
