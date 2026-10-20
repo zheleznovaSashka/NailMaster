@@ -1,0 +1,718 @@
+[
+{
+  "model": "sessions.session",
+  "pk": "00dexxc89vf8crawe3bc8088aj3zdt25",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSE8pAWX7vsNZJgZpGogKe3K-O_apAvd3nPOfYkI21ri1nmJM4mL0OL0uyXAB9cd0B3qrUlsdV3mJHdFHrTLqRE_r4f7d1Cgl2-NqKyxgBi8zTlrhUhKq2yZE53Zk-XRgwGlgCkl7YYxOG-CMyYF0oN4fwAOQTh-:1x5zsy:vPjIYw6hw1_lJc1OeyayJGMS6urvDGuWIBZBBRj7bn0",
+    "expire_date": "2026-09-28T06:09:48.997Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "bmzfghha2i1fjctd09h6q2kvk6lqylbu",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSE8pAWX7vsNZJgZpGogKe3K-O_apAvd3nPOfYkI21ri1nmJM4mL0OL0uyXAB9cd0B3qrUlsdV3mJHdFHrTLqRE_r4f7d1Cgl2-NqKyxgBi8zTlrhUhKq2yZE53Zk-XRgwGlgCkl7YYxOG-CMyYF0oN4fwAOQTh-:1xHmS1:8fNOiiahlknrLooISrIRgEkFq0fnAvpNk2sTbl1AbBM",
+    "expire_date": "2026-10-30T18:14:41.613Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "nibtw1mo61lrggxg5ua45rog4wd8yutc",
+  "fields": {
+    "session_data": ".eJxVjDsOgzAQBe_iOrL8icGmTM8Z0Hp3HZNEINlQIe4ekCiS9s282cQA65KHtXIZRhKd0OL2u0XAN08noBdMz1niPC1ljPJU5EWr7Gfiz-Ny_wIZaj7eiMoaC4jB25SSVoiktEqWOdKdPVluPRhQCphi1K5pg_MmOGNiIN0cUYSyiG7b9y9R9zvK:1x61C2:fyMk-dEqEHE5M58dP2njXvtNs8ZXLqrPKOXUK2qJ0Ro",
+    "expire_date": "2026-09-28T07:33:34.516Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "w53y5x0egmlbewnacq4mxq3ohbxwl18v",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSEwPNq6dO83kBkYpGogKe3K-O_apAvd3nPOfYmA21rC1nkJcxJn4cTpdyOMD647SHestyZjq-syk9wVedAury3x83K4fwcFe_nWFok1QlRJOQCfAdBb5e0QM9rBgKZJjWZ0k8mKybJj8N5nA2AdRdbi_QHPlzcs:1xAPlj:Iv8BUmO1JHWHVHGWErUFsvC-zl0oscaXO45QwQI1LgI",
+    "expire_date": "2026-10-10T10:36:35.683Z"
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$PQzzFQ4rI7Ar2CGt4yfFD3$O90/YVQE9q21dwMmfU34PtT3bJqdD30QFpRdh9D4Uq0=",
+    "last_login": "2026-10-16T18:14:41.603Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "Александра",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-09T17:45:20.654Z",
+    "email": "alex20sent01love@yandex.ru",
+    "phone": "+7 9093288605",
+    "avatar": "avatars/админ.jpg",
+    "is_banned": false,
+    "agreed_to_terms": false,
+    "agreed_at": null,
+    "consent_pd": false,
+    "consent_mailing": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$4xPMXcF6L0ZIqtBlNrmHdy$/0aWreVohbcDvE+yXxFgEUt5yH14tCGxuXXz28UcHyo=",
+    "last_login": "2026-09-10T11:08:22.485Z",
+    "is_superuser": false,
+    "username": "Сашка",
+    "first_name": "саша",
+    "last_name": "желез",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-10T11:08:21.497Z",
+    "email": "sashka@yandex.ru",
+    "phone": null,
+    "avatar": "",
+    "is_banned": false,
+    "agreed_to_terms": false,
+    "agreed_at": null,
+    "consent_pd": false,
+    "consent_mailing": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$KDUct1ie8d06HN5VpYYzUd$UMcu9ndCl8Rr1nypwYJaPcDaeqt0z7Z+qhyvLJNxe14=",
+    "last_login": "2026-09-22T15:44:14.086Z",
+    "is_superuser": false,
+    "username": "я",
+    "first_name": "я",
+    "last_name": "я",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-10T11:18:50.524Z",
+    "email": "ya@yandex.ru",
+    "phone": null,
+    "avatar": "",
+    "is_banned": false,
+    "agreed_to_terms": false,
+    "agreed_at": null,
+    "consent_pd": false,
+    "consent_mailing": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$iRk5WMZo5L69RZXR0xb1sj$4uzKhULQabkpdLydVBbIb4hnx6Ak1u/7k5XbyEHAPgU=",
+    "last_login": "2026-09-21T13:18:10.238Z",
+    "is_superuser": false,
+    "username": "Елена",
+    "first_name": "Елена",
+    "last_name": "Красавцева",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-14T07:19:38.199Z",
+    "email": "elena@yandex.ru",
+    "phone": "",
+    "avatar": "",
+    "is_banned": false,
+    "agreed_to_terms": false,
+    "agreed_at": null,
+    "consent_pd": false,
+    "consent_mailing": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$kSWDI3WBEXgq6dnGJL0DIi$1dFqLJOr6IcnYjbMO0PkDLEB7YgwvIRKzCHepaQ2wwo=",
+    "last_login": "2026-09-26T10:36:32.309Z",
+    "is_superuser": false,
+    "username": "Алексей",
+    "first_name": "Алексей",
+    "last_name": "Боронин",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-26T10:36:30.989Z",
+    "email": "Boroninaleksey@yandex.ru",
+    "phone": "",
+    "avatar": "",
+    "is_banned": false,
+    "agreed_to_terms": false,
+    "agreed_at": null,
+    "consent_pd": false,
+    "consent_mailing": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.favorite",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "work": 7,
+    "course": null,
+    "created_at": "2026-09-14T08:27:39.975Z"
+  }
+},
+{
+  "model": "users.favorite",
+  "pk": 9,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "work": null,
+    "course": 1,
+    "created_at": "2026-09-14T08:40:06.850Z"
+  }
+},
+{
+  "model": "users.favorite",
+  "pk": 11,
+  "fields": {
+    "user": [
+      "elena@yandex.ru"
+    ],
+    "work": 6,
+    "course": null,
+    "created_at": "2026-09-14T09:56:58.929Z"
+  }
+},
+{
+  "model": "users.favorite",
+  "pk": 12,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "work": 6,
+    "course": null,
+    "created_at": "2026-09-15T16:03:55.250Z"
+  }
+},
+{
+  "model": "core.masterinfo",
+  "pk": 1,
+  "fields": {
+    "name": "Елена Красавцева",
+    "photo": "master/2026-02-17_21_02_07.jpg",
+    "about": "Рада приветствовать вас на моем официальном сайте! Меня зовут Красавцева Елена Николаевна. Мой путь в бьюти индустрии начался в 2014 году, и за это время увлечение переросло в дело всей жизни, основанное на безупречном качестве и глубоких знаниях.\r\n- Путь к экспертности составляет более 12 лет непрерывной практики. За моими плечами тысячи успешных работ и довольных клиентов.Постоянное развитие. Индустрия красоты меняется стремительно. Чтобы всегда предлагать лучшее, я регулярно прохожу многократные повышения квалификации и осваиваю передовые техники.\r\n- Международное признание. Являюсь участником и призёром в престижных международных чемпионатах, что позволило мне заявить о себе на высоком уровне и доказать, что мое мастерство соответствует строгим мировым стандартам.\r\n- Новый этап: Передача опыта. В  2026 году я успешно прошла профессиональные инструкторские курсы. \r\nТеперь я не просто сертифицированный мастер, но и дипломированный преподаватель.Сегодня моя цель — не только создавать идеальный результат для своих клиентов, но и вдохновлять, обучать и растить новое поколение профессионалов нашей индустрии.Создаю красоту на стыке многолетнего опыта и современных трендов. Рада стать вашим мастером или проводником в профессию!\r\n\r\nНа этом сайте вы можете записаться ко мне на процедуры, а также узнать расписание моих авторских курсов и мастер-классов.",
+    "experience": 12,
+    "specialization": "мастер ногтевого сервиса"
+  }
+},
+{
+  "model": "core.document",
+  "pk": 1,
+  "fields": {
+    "slug": "about",
+    "title": "О мастере",
+    "content": "<h2>Добро пожаловать!</h2>\r\n<p>Меня зовут Елена — я профессиональный мастер маникюра с [X] летним опытом работы.</p>\r\n\r\n<h2>Моя специализация</h2>\r\n<ul>\r\n    <li>Классический маникюр</li>\r\n    <li>Аппаратный маникюр</li>\r\n    <li>Педикюр</li>\r\n    <li>Дизайн ногтей любой сложности</li>\r\n    <li>Наращивание ногтей</li>\r\n    <li>Обучение мастеров</li>\r\n</ul>\r\n\r\n<h2>Почему выбирают меня</h2>\r\n<ul>\r\n    <li>✅ Использую только качественные материалы</li>\r\n    <li>✅ Стерильный инструмент</li>\r\n    <li>✅ Индивидуальный подход к каждому клиенту</li>\r\n    <li>✅ Удобное онлайн-запись</li>\r\n    <li>✅ Приятная атмосфера и уютная студия</li>\r\n</ul>\r\n\r\n<h2>Мои достижения</h2>\r\n<ul>\r\n    <li>🏆 [Достижение 1]</li>\r\n    <li>🏆 [Достижение 2]</li>\r\n    <li>🏆 [Достижение 3]</li>\r\n</ul>\r\n\r\n<h2>Контакты</h2>\r\n<p>\r\n    📞 Телефон: <a href=\"tel:+79999999999\">+7 (999) 999-99-99</a><br>\r\n    📧 Email: <a href=\"mailto:ваша_почта@example.com\">ваша_почта@example.com</a>\r\n</p>",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-09-14T11:01:25.987Z",
+    "updated_at": "2026-09-14T11:07:35.534Z"
+  }
+},
+{
+  "model": "core.document",
+  "pk": 2,
+  "fields": {
+    "slug": "consent",
+    "title": "Согласие на обработку персональных данных",
+    "content": "<h2>1. Общие положения</h2>\r\n<p>Настоящим я, субъект персональных данных, в соответствии с Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных», свободно, своей волей и в своём интересе даю согласие на обработку моих персональных данных.</p>\r\n\r\n<h2>2. Перечень персональных данных</h2>\r\n<ul>\r\n    <li>Фамилия, имя</li>\r\n    <li>Адрес электронной почты</li>\r\n    <li>Номер телефона</li>\r\n    <li>Иные данные, предоставляемые мной добровольно</li>\r\n</ul>\r\n\r\n<h2>3. Цели обработки персональных данных</h2>\r\n<ul>\r\n    <li>Регистрация и идентификация на сайте</li>\r\n    <li>Предоставление доступа к онлайн-курсам</li>\r\n    <li>Обратная связь и консультирование</li>\r\n    <li>Отправка уведомлений и информационных сообщений</li>\r\n    <li>Улучшение качества обслуживания</li>\r\n</ul>\r\n\r\n<h2>4. Действия с персональными данными</h2>\r\n<p>Сбор, запись, систематизация, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, обезличивание, блокирование, удаление, уничтожение.</p>\r\n\r\n<h2>5. Срок действия согласия</h2>\r\n<p>Согласие действует с момента его предоставления до момента отзыва. Согласие может быть отозвано путём направления письменного уведомления на email <a href=\"mailto:ваша_почта@example.com\">ваша_почта@example.com</a>.</p>\r\n\r\n<h2>6. Права субъекта персональных данных</h2>\r\n<p>Я имею право на получение информации об обработке моих персональных данных, на их уточнение, блокирование или уничтожение в случае, если они являются неполными, устаревшими, неточными или незаконно полученными.</p>",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-09-14T11:01:26Z",
+    "updated_at": "2026-09-14T11:01:26Z"
+  }
+},
+{
+  "model": "core.document",
+  "pk": 3,
+  "fields": {
+    "slug": "offer",
+    "title": "Публичная оферта",
+    "content": "<h2>1. Общие положения</h2>\r\n<p>Настоящий документ является публичной офертой (далее — Оферта) в соответствии со статьёй 437 Гражданского кодекса РФ и содержит все существенные условия договора на приобретение онлайн-курсов.</p>\r\n\r\n<h2>2. Предмет договора</h2>\r\n<p>Продавец предоставляет Покупателю доступ к онлайн-курсам (видеоурокам, материалам) на условиях, указанных в Оферте.</p>\r\n\r\n<h2>3. Акцепт оферты</h2>\r\n<p>Акцептом Оферты является оплата курса Покупателем. С момента оплаты договор считается заключённым.</p>\r\n\r\n<h2>4. Стоимость и порядок оплаты</h2>\r\n<p>Стоимость курсов указана на сайте. Оплата производится через платёжные системы, представленные на сайте.</p>\r\n\r\n<h2>5. Доступ к курсу</h2>\r\n<p>Доступ предоставляется на срок, указанный в описании курса. Доступ не передаётся третьим лицам.</p>\r\n\r\n<h2>6. Возврат средств</h2>\r\n<p>Возврат средств возможен в течение 14 дней с момента оплаты, если курс не был просмотрен более чем на 30%.</p>\r\n\r\n<h2>7. Авторские права</h2>\r\n<p>Все материалы курсов защищены авторским правом. Копирование, распространение и передача материалов третьим лицам запрещены.</p>",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-09-14T11:01:26.009Z",
+    "updated_at": "2026-09-14T11:01:26.009Z"
+  }
+},
+{
+  "model": "core.document",
+  "pk": 4,
+  "fields": {
+    "slug": "privacy",
+    "title": "Политика конфиденциальности",
+    "content": "<h2>1. Общие положения</h2>\r\n<p>Настоящая Политика конфиденциальности персональных данных (далее — Политика) действует в отношении всей информации, которую сайт «Nail Master» может получить о Пользователе во время использования сайта.</p>\r\n\r\n<h2>2. Какие данные мы собираем</h2>\r\n<ul>\r\n    <li>Имя и фамилия</li>\r\n    <li>Адрес электронной почты</li>\r\n    <li>Номер телефона</li>\r\n    <li>Данные о заказах</li>\r\n    <li>Файлы cookie и данные аналитики</li>\r\n</ul>\r\n\r\n<h2>3. Цели сбора данных</h2>\r\n<ul>\r\n    <li>Обработка заказов и предоставление доступа к курсам</li>\r\n    <li>Обратная связь с Пользователем</li>\r\n    <li>Улучшение работы сайта</li>\r\n    <li>Отправка уведомлений о заказах</li>\r\n</ul>\r\n\r\n<h2>4. Защита данных</h2>\r\n<p>Мы принимаем необходимые организационные и технические меры для защиты персональных данных от неправомерного доступа, уничтожения, изменения, блокирования и распространения.</p>\r\n\r\n<h2>5. Права Пользователя</h2>\r\n<p>Пользователь имеет право:</p>\r\n<ul>\r\n    <li>Получать информацию о своих персональных данных</li>\r\n    <li>Требовать уточнения, блокирования или уничтожения данных</li>\r\n    <li>Отозвать согласие на обработку персональных данных</li>\r\n</ul>\r\n\r\n<h2>6. Контакты</h2>\r\n<p>По всем вопросам обращайтесь по адресу: <a href=\"mailto:ваша_почта@example.com\">ваша_почта@example.com</a></p>",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-09-14T11:01:26.016Z",
+    "updated_at": "2026-09-14T11:01:26.016Z"
+  }
+},
+{
+  "model": "core.document",
+  "pk": 5,
+  "fields": {
+    "slug": "terms",
+    "title": "Пользовательское соглашение",
+    "content": "<h2>1. Общие положения</h2>\r\n<p>Настоящее Пользовательское соглашение (далее — Соглашение) регулирует отношения между Администрацией сайта «Nail Master» и пользователем при использовании сайта.</p>\r\n\r\n<h2>2. Термины и определения</h2>\r\n<ul>\r\n    <li><strong>Сайт</strong> — интернет-ресурс, размещённый по адресу nailmaster.ru</li>\r\n    <li><strong>Пользователь</strong> — лицо, использующее Сайт</li>\r\n    <li><strong>Администрация</strong> — владелец сайта</li>\r\n</ul>\r\n\r\n<h2>3. Предмет соглашения</h2>\r\n<p>Администрация предоставляет Пользователю доступ к функционалу Сайта на условиях настоящего Соглашения.</p>\r\n\r\n<h2>4. Права и обязанности пользователя</h2>\r\n<p>Пользователь обязуется:</p>\r\n<ul>\r\n    <li>Не нарушать законодательство РФ</li>\r\n    <li>Не размещать запрещённый контент</li>\r\n    <li>Не копировать материалы сайта без разрешения</li>\r\n    <li>Предоставлять достоверную информацию при регистрации</li>\r\n</ul>\r\n\r\n<h2>5. Права администрации</h2>\r\n<p>Администрация вправе:</p>\r\n<ul>\r\n    <li>Изменять условия Соглашения</li>\r\n    <li>Блокировать пользователей за нарушения</li>\r\n    <li>Удалять контент, нарушающий правила</li>\r\n    <li>Проводить технические работы</li>\r\n</ul>\r\n\r\n<h2>6. Интеллектуальная собственность</h2>\r\n<p>Все материалы сайта (текст, фото, видео, курсы) защищены авторским правом. Копирование и распространение без разрешения запрещено.</p>\r\n\r\n<h2>7. Ответственность</h2>\r\n<p>Администрация не несёт ответственности за:</p>\r\n<ul>\r\n    <li>Временные сбои в работе сайта</li>\r\n    <li>Действия третьих лиц</li>\r\n    <li>Убытки, возникшие в результате использования сайта</li>\r\n</ul>\r\n\r\n<h2>8. Заключительные положения</h2>\r\n<p>Использование Сайта означает согласие с настоящим Соглашением. Соглашение вступает в силу с момента его размещения на Сайте.</p>",
+    "order": 0,
+    "is_active": true,
+    "created_at": "2026-09-14T11:01:26.024Z",
+    "updated_at": "2026-09-14T11:01:26.024Z"
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 1,
+  "fields": {
+    "title": "1",
+    "description": "1",
+    "image": "portfolio/IMG_3102.jpg",
+    "created_at": "2026-09-09T18:08:38.941Z",
+    "is_featured": true,
+    "views": 0
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 2,
+  "fields": {
+    "title": "2",
+    "description": "2",
+    "image": "portfolio/IMG_5748.jpg",
+    "created_at": "2026-09-09T18:09:03.763Z",
+    "is_featured": false,
+    "views": 0
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 3,
+  "fields": {
+    "title": "3",
+    "description": "3",
+    "image": "portfolio/IMG_5758.jpg",
+    "created_at": "2026-09-09T18:09:15.867Z",
+    "is_featured": true,
+    "views": 0
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 4,
+  "fields": {
+    "title": "Работа ученика.",
+    "description": "Стемпинг. Наращивание нижними формами.",
+    "image": "portfolio/TLaaTyxDoIsr_yj2fO9w8LobqzoPC-Z0ivDUS8sCiu2B7L5eEl633l3i-SFO5ngro4XZ8VBpWN2rBb_wIvcb6O.jpg",
+    "created_at": "2026-09-10T11:14:10.382Z",
+    "is_featured": true,
+    "views": 1
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 5,
+  "fields": {
+    "title": "Работа ученика.",
+    "description": "Наращивание. Нижние формы.",
+    "image": "portfolio/GEbeMyni89Fq9FVwSdlHGy0fPv-7b3_V0Qy3OlvhGc3JlofkOMPW-2A_v542L8wx2wS2vTlvezhvnw_FZXxuGV.jpg",
+    "created_at": "2026-09-10T11:15:23.488Z",
+    "is_featured": true,
+    "views": 1
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 6,
+  "fields": {
+    "title": "Моя работа.",
+    "description": "Стемпинг. Гелевое укрепление.",
+    "image": "portfolio/TDAPCzGVmyavEsoALsMPHL7MwmlGn-u4TrKF6euwPILrnMu-P1lpk7kV4do-UwVqjoHnXhud7HCEXf_gKWhJtk.jpg",
+    "created_at": "2026-09-10T11:17:00.387Z",
+    "is_featured": true,
+    "views": 2
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 7,
+  "fields": {
+    "title": "Наращивание",
+    "description": "Верхние формы. Наращивание",
+    "image": "portfolio/IMG_5748_Dv2qTND.jpg",
+    "created_at": "2026-09-10T11:54:13.052Z",
+    "is_featured": true,
+    "views": 2
+  }
+},
+{
+  "model": "portfolio.workview",
+  "pk": 1,
+  "fields": {
+    "work": 5,
+    "user": null,
+    "session_key": "hhemeq5dktc7jvwci8si14x0z5z6ns15",
+    "created_at": "2026-09-21T13:17:30.118Z"
+  }
+},
+{
+  "model": "portfolio.workview",
+  "pk": 2,
+  "fields": {
+    "work": 4,
+    "user": null,
+    "session_key": "hhemeq5dktc7jvwci8si14x0z5z6ns15",
+    "created_at": "2026-09-21T13:17:38.705Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 1,
+  "fields": {
+    "title": "база",
+    "description": "базовый курс подойдет для начинающего мастера ",
+    "video": "courses/videos/42CF632A-9396-472F-883B-A580F58557D8.mov",
+    "video_url": "",
+    "price": "1000.00",
+    "image": "courses/T4WMzTQNRCd93ipFt8Yfti9VibWy0VXm3Y70R2QFBKty6SNBUd-qj_3A8bItbAbYy3rRcT-iv7bUYHYb0b3_GIAP.jpg",
+    "duration": "3 часа",
+    "created_at": "2026-09-09T18:13:46.398Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 2,
+  "fields": {
+    "title": "Наращивание верхние формы",
+    "description": "Курс «Верхние формы»\r\nПодходит для мастеров с опытом работы.\r\n\r\nДень 1: Основы и техника\r\n\r\n1. Изучение верхних форм: Разберете виды изгибов (продольный и поперечный), а также различные формы ногтей (миндаль и квадрат).\r\n\r\n2. Подбор форм: Обсуждение, как выбрать подходящие верхние формы, учитывая анатомию натуральных ногтей — включает подрезание и заужение.\r\n\r\n3. Материалы: Обзор акригелей, гелей и полигелей.\r\n\r\n4. Выкладка материала: Научитесь правильно распределять материал на форме, изучите разные варианты выкладки.\r\n\r\n5. Подготовка пластины: Как подготовить натуральную пластину для работы с верхними формами с помощью вспомогательных жидкостей.\r\n\r\n6. Техника постановки форм: Уникальный подход к постановке форм без затеков.\r\n\r\n7. Опил квадрата: Обсуждение техник опила и правильная постановка руки.\r\n\r\nДень 2: Практика и дизайн\r\n\r\n1. Работа над ошибками: Устранение проблем, возникших в ходе работы.\r\n\r\n2. Подбор форм на миндаль: Разбор различных схем (овал, салонный миндаль, стилет).\r\n\r\n3. Схема опила: Сравнение опила овала и миндаля.\r\n\r\n4. Витражный дизайн: Изучение техник дизайна.\r\n\r\n💰 Стоимость: 18,000 рублей\r\n⏳ Длительность: 2 дня\r\n\r\nВозможен выезд в другие города при групповом обучении, за подробностями в Direct.",
+    "video": "courses/videos/vkclips_20260915072652.mp4",
+    "video_url": "",
+    "price": "18000.00",
+    "image": "courses/IMG_5758_zua9Yfm.jpg",
+    "duration": "12 часов",
+    "created_at": "2026-09-15T16:28:35.132Z"
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 3,
+  "fields": {
+    "title": "Ламинирование натуральных ногтей ",
+    "description": "",
+    "video": "courses/videos/vkclips_20260915073251.mp4",
+    "video_url": "",
+    "price": "1500.00",
+    "image": "courses/sr5pi8le5oDmd-p3ldRsCWMPt74sVZhvZNbxlJRspG6R7ox8LucD9VL5QenEIRWXqmluNwX_tavWTMIE5FJNKklK.jpg",
+    "duration": "2 часа",
+    "created_at": "2026-09-15T16:35:11.023Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "review_type": "work",
+    "text": "все супер",
+    "rating": 5,
+    "image": "",
+    "is_approved": true,
+    "created_at": "2026-09-10T10:50:32.640Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "elena@yandex.ru"
+    ],
+    "review_type": "master",
+    "text": "мне очень понравилась работа мастера",
+    "rating": 5,
+    "image": "",
+    "is_approved": true,
+    "created_at": "2026-09-14T07:20:45.993Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "review_type": "course",
+    "text": "мне пришлось взять кредит",
+    "rating": 5,
+    "image": "",
+    "is_approved": false,
+    "created_at": "2026-09-15T15:59:21.745Z"
+  }
+},
+{
+  "model": "reviews.review",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "review_type": "master",
+    "text": "кредит",
+    "rating": 5,
+    "image": "",
+    "is_approved": false,
+    "created_at": "2026-09-26T10:25:51.978Z"
+  }
+},
+{
+  "model": "reviews.screenshotreview",
+  "pk": 1,
+  "fields": {
+    "title": "Отзыв Альбины о курсе",
+    "source": "other",
+    "image": "reviews/screenshots/pCP1e7oyMwyinFYQOXO4k5-ffbvuPRxb_Iyc_Sw2SZ5I8Q6tGHcnRapJSg6n4P4z11k9_J9YRjhU.jpg",
+    "is_featured": true,
+    "order": 0,
+    "created_at": "2026-09-10T11:36:08.650Z"
+  }
+},
+{
+  "model": "contacts.contactinfo",
+  "pk": 1,
+  "fields": {
+    "phone": "+79375134357",
+    "email": "moderator@example.com",
+    "instagram": "",
+    "telegram": "https://t.me/Krasavtseva_Elena",
+    "max_messenger": "https://max.ru/u/f9LHodD0cOJ-106uQpaKEqgqCERPh44BJ0FOEDeYuZfw1MKwfNfeGik2io0",
+    "booking_url": "https://dikidi.net/1335430"
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "total_price": "1000.00",
+    "status": "pending",
+    "created_at": "2026-09-15T17:19:37.790Z",
+    "payment_id": null,
+    "courses": [
+      1
+    ]
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "total_price": "18000.00",
+    "status": "paid",
+    "created_at": "2026-09-15T17:20:40.735Z",
+    "payment_id": null,
+    "courses": [
+      2
+    ]
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "total_price": "1500.00",
+    "status": "pending",
+    "created_at": "2026-09-26T10:24:31.189Z",
+    "payment_id": null,
+    "courses": [
+      3
+    ]
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-09-14T05:36:53.881Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "sites",
+      "site"
+    ],
+    "object_id": "2",
+    "object_repr": "/pages/privacy/",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-09-14T05:37:04.286Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "sites",
+      "site"
+    ],
+    "object_id": "3",
+    "object_repr": "/pages/offer/",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-09-14T05:46:01.848Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "flatpages",
+      "flatpage"
+    ],
+    "object_id": "1",
+    "object_repr": "/pages/privacy/ -- Политика конфиденциальности",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-09-14T05:46:37.518Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "flatpages",
+      "flatpage"
+    ],
+    "object_id": "2",
+    "object_repr": "/pages/offer/ -- Публичная оферта",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-09-14T05:46:58.673Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "flatpages",
+      "flatpage"
+    ],
+    "object_id": "2",
+    "object_repr": "/pages/offer/ -- Публичная оферта",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Template name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-09-14T05:47:13.357Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "flatpages",
+      "flatpage"
+    ],
+    "object_id": "1",
+    "object_repr": "/pages/privacy/ -- Политика конфиденциальности",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Template name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-09-14T10:29:16.910Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "flatpages",
+      "flatpage"
+    ],
+    "object_id": "3",
+    "object_repr": "/pages/consent/ -- Согласие на обработку персональных данных",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-09-14T10:30:03.615Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "flatpages",
+      "flatpage"
+    ],
+    "object_id": "4",
+    "object_repr": "/pages/terms/ -- Пользовательское соглашение",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-09-14T10:30:38.067Z",
+    "user": [
+      "alex20sent01love@yandex.ru"
+    ],
+    "content_type": [
+      "flatpages",
+      "flatpage"
+    ],
+    "object_id": "5",
+    "object_repr": "/pages/about/ -- О мастере",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+}
+]
