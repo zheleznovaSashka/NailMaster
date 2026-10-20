@@ -1,0 +1,65 @@
+[
+{
+  "model": "users.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$PQzzFQ4rI7Ar2CGt4yfFD3$O90/YVQE9q21dwMmfU34PtT3bJqdD30QFpRdh9D4Uq0=",
+    "last_login": "2026-09-10T12:09:16.688Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "Александра",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-09T17:45:20.654Z",
+    "email": "alex20sent01love@yandex.ru",
+    "phone": "+7 9093288605",
+    "avatar": "avatars/админ.jpg",
+    "is_banned": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$4xPMXcF6L0ZIqtBlNrmHdy$/0aWreVohbcDvE+yXxFgEUt5yH14tCGxuXXz28UcHyo=",
+    "last_login": "2026-09-10T11:08:22.485Z",
+    "is_superuser": false,
+    "username": "Сашка",
+    "first_name": "саша",
+    "last_name": "желез",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-10T11:08:21.497Z",
+    "email": "sashka@yandex.ru",
+    "phone": null,
+    "avatar": "",
+    "is_banned": false,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$KDUct1ie8d06HN5VpYYzUd$UMcu9ndCl8Rr1nypwYJaPcDaeqt0z7Z+qhyvLJNxe14=",
+    "last_login": "2026-09-10T12:09:06.322Z",
+    "is_superuser": false,
+    "username": "я",
+    "first_name": "я",
+    "last_name": "я",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-10T11:18:50.524Z",
+    "email": "ya@yandex.ru",
+    "phone": null,
+    "avatar": "",
+    "is_banned": false,
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

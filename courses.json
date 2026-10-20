@@ -1,0 +1,16 @@
+[
+{
+  "model": "courses.course",
+  "pk": 1,
+  "fields": {
+    "title": "база",
+    "description": "1",
+    "video": "courses/videos/42CF632A-9396-472F-883B-A580F58557D8.mov",
+    "video_url": null,
+    "price": "1000.00",
+    "image": "courses/IMG_5758.jpg",
+    "duration": "3",
+    "created_at": "2026-09-09T18:13:46.398Z"
+  }
+}
+]

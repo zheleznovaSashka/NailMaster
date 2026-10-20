@@ -22,7 +22,7 @@ media_backup_*/
 db_backup_*
 
 # JSON-выгрузки (не нужны в репо)
-*.json
+#/.json
 
 # IDE
 .idea/

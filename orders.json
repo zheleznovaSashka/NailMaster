@@ -1,0 +1,30 @@
+[
+{
+  "model": "orders.order",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "total_price": "1000.00",
+    "status": "cancelled",
+    "created_at": "2026-09-09T18:45:09.059Z",
+    "payment_id": null,
+    "courses": [
+      1
+    ]
+  }
+},
+{
+  "model": "orders.order",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "total_price": "1000.00",
+    "status": "cancelled",
+    "created_at": "2026-09-10T11:46:43.166Z",
+    "payment_id": null,
+    "courses": [
+      1
+    ]
+  }
+}
+]

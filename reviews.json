@@ -1,0 +1,27 @@
+[
+{
+  "model": "reviews.review",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "review_type": "work",
+    "text": "все супер",
+    "rating": 5,
+    "image": "",
+    "is_approved": true,
+    "created_at": "2026-09-10T10:50:32.640Z"
+  }
+},
+{
+  "model": "reviews.screenshotreview",
+  "pk": 1,
+  "fields": {
+    "title": "Отзыв Альбины о курсе",
+    "source": "other",
+    "image": "reviews/screenshots/pCP1e7oyMwyinFYQOXO4k5-ffbvuPRxb_Iyc_Sw2SZ5I8Q6tGHcnRapJSg6n4P4z11k9_J9YRjhU.jpg",
+    "is_featured": true,
+    "order": 0,
+    "created_at": "2026-09-10T11:36:08.650Z"
+  }
+}
+]

@@ -1,0 +1,79 @@
+[
+{
+  "model": "portfolio.work",
+  "pk": 1,
+  "fields": {
+    "title": "1",
+    "description": "1",
+    "image": "portfolio/IMG_3102.jpg",
+    "created_at": "2026-09-09T18:08:38.941Z",
+    "is_featured": false
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 2,
+  "fields": {
+    "title": "2",
+    "description": "2",
+    "image": "portfolio/IMG_5748.jpg",
+    "created_at": "2026-09-09T18:09:03.763Z",
+    "is_featured": false
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 3,
+  "fields": {
+    "title": "3",
+    "description": "3",
+    "image": "portfolio/IMG_5758.jpg",
+    "created_at": "2026-09-09T18:09:15.867Z",
+    "is_featured": false
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 4,
+  "fields": {
+    "title": "Работа ученика.",
+    "description": "Стемпинг. Наращивание нижними формами.",
+    "image": "portfolio/TLaaTyxDoIsr_yj2fO9w8LobqzoPC-Z0ivDUS8sCiu2B7L5eEl633l3i-SFO5ngro4XZ8VBpWN2rBb_wIvcb6O.jpg",
+    "created_at": "2026-09-10T11:14:10.382Z",
+    "is_featured": true
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 5,
+  "fields": {
+    "title": "Работа ученика.",
+    "description": "Наращивание. Нижние формы.",
+    "image": "portfolio/GEbeMyni89Fq9FVwSdlHGy0fPv-7b3_V0Qy3OlvhGc3JlofkOMPW-2A_v542L8wx2wS2vTlvezhvnw_FZXxuGV.jpg",
+    "created_at": "2026-09-10T11:15:23.488Z",
+    "is_featured": true
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 6,
+  "fields": {
+    "title": "Моя работа.",
+    "description": "Стемпинг. Гелевое укрепление.",
+    "image": "portfolio/TDAPCzGVmyavEsoALsMPHL7MwmlGn-u4TrKF6euwPILrnMu-P1lpk7kV4do-UwVqjoHnXhud7HCEXf_gKWhJtk.jpg",
+    "created_at": "2026-09-10T11:17:00.387Z",
+    "is_featured": true
+  }
+},
+{
+  "model": "portfolio.work",
+  "pk": 7,
+  "fields": {
+    "title": "Наращивание",
+    "description": "Верхние формы. Наращивание",
+    "image": "portfolio/IMG_5748_Dv2qTND.jpg",
+    "created_at": "2026-09-10T11:54:13.052Z",
+    "is_featured": true
+  }
+}
+]

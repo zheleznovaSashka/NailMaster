@@ -1,0 +1,14 @@
+[
+{
+  "model": "contacts.contactinfo",
+  "pk": 1,
+  "fields": {
+    "phone": "+79375134357",
+    "email": "moderator@example.com",
+    "instagram": "",
+    "telegram": "https://t.me/Krasavtseva_Elena",
+    "max_messenger": "https://max.ru/u/f9LHodD0cOJ-106uQpaKEqgqCERPh44BJ0FOEDeYuZfw1MKwfNfeGik2io0",
+    "booking_url": "https://dikidi.net/1335430"
+  }
+}
+]
