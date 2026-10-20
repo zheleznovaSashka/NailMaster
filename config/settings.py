@@ -213,3 +213,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 MASTER_EMAIL = 'alex20sent01love@gmail.com'  # Куда отправлять уведомления
 
 SITE_ID = 1
+
+CSRF_TRUSTED_ORIGINS = ['https://nailmaster-sashka.msk1.amvera.tech']
