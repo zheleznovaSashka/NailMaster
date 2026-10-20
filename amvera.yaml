@@ -5,5 +5,5 @@ meta:
     version: 3.12
 
 run:
-  command: python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:80
+  command: python manage.py migrate && python manage.py loaddata data.json && gunicorn config.wsgi:application --bind 0.0.0.0:80
   containerPort: 80
