@@ -5,11 +5,22 @@
     <div class="card shadow">
         <div class="card-body">
             <h3 class="text-center mb-4">Вход</h3>
+
+            {# Показываем общую ошибку формы (неверный логин/пароль) #}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <p class="mb-0">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" name="username" class="form-control" required>
+                    <input type="email" name="username" class="form-control" required
+                           value="{{ form.username.value|default:'' }}">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Пароль</label>
