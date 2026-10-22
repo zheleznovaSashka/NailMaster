@@ -163,3 +163,7 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_DOMAIN = 'nailmaster-sashka.msk1.amvera.tech'
+
+# Лимиты для загрузки файлов (видео, изображения)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600  # 100 MB
